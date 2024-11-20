@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import Navbar from '@/components/dashboard/Navbar.vue'
-import carousel from '@/components/carousel.vue'
+import MyNavbar from '@/components/dashboard/MyNavbar.vue'
+import MyCarousel from '@/components/MyCarousel.vue'
 </script>
 
 <template>
-  <Navbar />
-  <carousel />
+  <MyNavbar />
+  <MyCarousel />
 </template>
 
 <style scoped></style>

@@ -50,15 +50,15 @@ import ger from '@/assets/flags/ger.png'
       <div class="dropdown dropdown-end">
         <div tabindex="0" role="button" class="btn btn-ghost btn-square avatar">
           <div class="w-auto h-10">
-            <img alt="uk" :src="uk"/>
+            <img alt="uk" :src="uk" />
           </div>
         </div>
         <ul
           tabindex="0"
           class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-20 p-2 shadow"
         >
-          <li><img alt="est" :src="est"></img></li>
-          <li><img alt="ger" :src="ger"></img></li>
+          <li><img alt="est" :src="est" /></li>
+          <li><img alt="ger" :src="ger" /></li>
         </ul>
       </div>
     </div>
