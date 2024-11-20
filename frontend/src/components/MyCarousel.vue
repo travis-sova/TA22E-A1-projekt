@@ -55,8 +55,8 @@ onUnmounted(() => {
         </div>
       </div>
       <div class="absolute inset-0 flex justify-between items-center">
-        <button @click="prevSlide" class="btn btn-circle">❮</button>
-        <button @click="nextSlide" class="btn btn-circle">❯</button>
+        <button @click="prevSlide" class="btn btn-circle ml-2">❮</button>
+        <button @click="nextSlide" class="btn btn-circle mr-2">❯</button>
       </div>
     </div>
   </div>
