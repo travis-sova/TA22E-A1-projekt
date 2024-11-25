@@ -6,35 +6,52 @@
     <li><a>Coming Soon</a></li>
     <li><a>Showtimes</a></li>
   </ul>
-  <br />
-  <ul class="menu menu-vertical lg:menu-horizontal w-full justify-start bg-secondary text-primary">
-    <li class="mx-5">
-      <select class="select select-ghost max-w-xs w-full">
-        <option>Today, 11.20.2024</option>
-        <option>Tomorrow, 11.21.2024</option>
-        <option>Fr, 11.22.2024</option>
-        <option>Sa, 11.23.2024</option>
-        <option>Su, 11.24.2024</option>
-        <option>Mo, 11.25.2024</option>
+  <form
+    class="menu menu-vertical lg:menu-horizontal w-full justify-start bg-secondary text-primary"
+  >
+    <div class="mx-5">
+      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >Select an option</label
+      >
+      <select
+        id="countries"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      >
+        <option selected>Today, 23.11.2024</option>
+        <option value="US">Tomorrow, 24.11.2024</option>
+        <option value="CA">Monday, 25.11.2024</option>
+        <option value="FR">Tuesday, 26.11.2024</option>
+        <option value="DE">Wednesday, 27.11.2024</option>
       </select>
-    </li>
-    <li class="mx-5">
-      <select class="select select-ghost max-w-xs w-full">
-        <option>All Genres</option>
-        <option>Comedy</option>
-        <option>Drama</option>
-        <option>Sci-fi</option>
-        <option>Horror</option>
-        <option>Action</option>
+    </div>
+    <div class="mx-5">
+      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >Select an option</label
+      >
+      <select
+        id="countries"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      >
+        <option selected>All genres</option>
+        <option value="US">Comdey</option>
+        <option value="CA">Drama</option>
+        <option value="FR">Sci-fi</option>
+        <option value="DE">Horror</option>
       </select>
-    </li>
-    <li class="mx-5">
-      <select class="select select-ghost max-w-xs w-full">
-        <option disabled selected>Showtime</option>
-        <option>Mida?</option>
+    </div>
+    <div class="mx-5">
+      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >Select an option</label
+      >
+      <select
+        id="countries"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      >
+        <option selected>Showtime</option>
+        <option value="US">Mida?</option>
       </select>
-    </li>
-  </ul>
+    </div>
+  </form>
 </template>
 
 <style scoped>
