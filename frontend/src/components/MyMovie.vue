@@ -1,4 +1,15 @@
-<script lang="ts"></script>
+<script setup lang="ts">
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  const round = document.getElementsByClassName('round')
+  const roundRadius = round[0].getElementsByTagName('circle')[0].getAttribute('r')
+  const roundPercent = round[0].getAttribute('data-percent')
+  const roundCircum = 2 * +roundRadius * Math.PI
+  const roundDraw = (+roundPercent * roundCircum) / 100
+  round[0].style.strokeDasharray = roundDraw + ' 999'
+})
+</script>
 
 <template>
   <div class="card card-side bg-secondary max-w-xl shadow-xl m-10 pl-5 py-3 text-primary">
@@ -11,16 +22,55 @@
     <div class="card-body">
       <h2 class="card-title">Spiderman</h2>
       <p>Action</p>
-      <div class="card-actions jusify-between flex-row items-stretch">
-        <div>
-          <svg height="100" width="100" xmlns="http://www.w3.org/2000/svg">
-            <circle r="25" cx="50" cy="50" fill="red" />
+      <div class="container flex card-actions jusify-between items-start">
+        <div class="svg-container">
+          <svg class="round" viewbox="0 0 100 100" width="50" height="50" data-percent="65">
+            <circle cx="25" cy="25" r="20" />
           </svg>
         </div>
-        <button class="btn btn-primary">Watch</button>
+
+        <div class="flex-grow content-container">
+          <p>Available seats</p>
+          <p>11</p>
+        </div>
+        <button class="btn btn-primary watch-button">Watch</button>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.round {
+  transform: rotate(-90deg);
+  transition: all 1s ease-in-out;
+
+  /* SVG */
+  fill: none;
+  stroke: red;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-dasharray: 0 999;
+}
+
+.container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.svg-container {
+  flex-shrink: 0;
+}
+
+.content-container {
+  flex-grow: 1;
+  align-self: flex-end;
+}
+
+.watch-button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+}
+</style>
