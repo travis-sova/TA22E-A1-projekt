@@ -4,22 +4,33 @@ import user from '@/assets/user.png'
 import est from '@/assets/flags/est.png'
 import uk from '@/assets/flags/uk.png'
 import ger from '@/assets/flags/ger.png'
+import { RouterLink } from 'vue-router'
 </script>
 
 <template>
   <div class="navbar bg-primary text-primary-content">
-    <a class="flex flex-shrink-0 items-center mr-4" href="index.html">
+    <router-link class="flex flex-shrink-0 items-center mr-4" to="/">
       <img class="w-auto h-10" :src="logo" alt="Logo" />
       <span class="hidden md:block text-2xl font-bold ml-2">Spinning rat's cinema</span>
-    </a>
+    </router-link>
 
     <div class="flex flex-grow">
       <div class="join flex-grow flex">
-        <button class="btn btn-ghost no-animation join-item flex-grow">Movies</button>
-        <button class="btn btn-ghost no-animation join-item flex-grow">Cinemas</button>
-        <button class="btn btn-ghost no-animation join-item flex-grow">Events</button>
-        <button class="btn btn-ghost no-animation join-item flex-grow">Tickets</button>
-        <button class="btn btn-ghost no-animation join-item flex-grow">News</button>
+        <router-link to="/MyMovies" class="btn btn-ghost no-animation join-item flex-grow"
+          >Movies</router-link
+        >
+        <router-link to="/MyCinemas" class="btn btn-ghost no-animation join-item flex-grow"
+          >Cinemas</router-link
+        >
+        <router-link to="/MyEevents" class="btn btn-ghost no-animation join-item flex-grow"
+          >Events</router-link
+        >
+        <router-link to="/MyYickets" class="btn btn-ghost no-animation join-item flex-grow"
+          >Tickets</router-link
+        >
+        <router-link to="/News" class="btn btn-ghost no-animation join-item flex-grow"
+          >News</router-link
+        >
       </div>
     </div>
 
