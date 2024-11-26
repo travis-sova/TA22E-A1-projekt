@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <ul class="menu menu-vertical lg:menu-horizontal bg-base-200 w-full justify-center">
+  <ul class="menu menu-vertical sm:menu-horizontal bg-base-200 w-full justify-center">
     <li><a>Now in Theaters</a></li>
     <li><a>Coming Soon</a></li>
     <li><a>Showtimes</a></li>
@@ -10,11 +10,11 @@
     class="menu menu-vertical lg:menu-horizontal w-full justify-start bg-secondary text-primary"
   >
     <div class="mx-5">
-      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >Select an option</label
       >
       <select
-        id="countries"
+        id="date"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       >
         <option selected>Today, 23.11.2024</option>
@@ -25,11 +25,11 @@
       </select>
     </div>
     <div class="mx-5">
-      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      <label for="genre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >Select an option</label
       >
       <select
-        id="countries"
+        id="genre"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       >
         <option selected>All genres</option>
@@ -40,11 +40,11 @@
       </select>
     </div>
     <div class="mx-5">
-      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      <label for="showtime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >Select an option</label
       >
       <select
-        id="countries"
+        id="showtime"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       >
         <option selected>Showtime</option>
