@@ -16,16 +16,16 @@ import { RouterLink } from 'vue-router'
 
     <div class="flex flex-grow">
       <div class="join flex-grow flex">
-        <router-link to="/MyMovies" class="btn btn-ghost no-animation join-item flex-grow"
+        <router-link to="/Movies" class="btn btn-ghost no-animation join-item flex-grow"
           >Movies</router-link
         >
-        <router-link to="/MyCinemas" class="btn btn-ghost no-animation join-item flex-grow"
+        <router-link to="/Cinemas" class="btn btn-ghost no-animation join-item flex-grow"
           >Cinemas</router-link
         >
-        <router-link to="/MyEevents" class="btn btn-ghost no-animation join-item flex-grow"
+        <router-link to="/Events" class="btn btn-ghost no-animation join-item flex-grow"
           >Events</router-link
         >
-        <router-link to="/MyYickets" class="btn btn-ghost no-animation join-item flex-grow"
+        <router-link to="/Tickets" class="btn btn-ghost no-animation join-item flex-grow"
           >Tickets</router-link
         >
         <router-link to="/News" class="btn btn-ghost no-animation join-item flex-grow"
@@ -48,13 +48,8 @@ import { RouterLink } from 'vue-router'
           tabindex="0"
           class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
         >
-          <li>
-            <a class="justify-between">
-              Profile
-              <span class="badge">New</span>
-            </a>
-          </li>
-          <li><a>Settings</a></li>
+          <li><router-link to="/Profile">Profile</router-link></li>
+          <li><router-link to="/Settings">Settings</router-link></li>
           <li><a>Logout</a></li>
         </ul>
       </div>
