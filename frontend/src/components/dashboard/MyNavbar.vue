@@ -11,11 +11,11 @@ import { RouterLink } from 'vue-router'
   <div class="navbar bg-primary text-primary-content">
     <router-link class="flex flex-shrink-0 items-center mr-4" to="/">
       <img class="w-auto h-10" :src="logo" alt="Logo" />
-      <span class="hidden md:block text-2xl font-bold ml-2">Spinning rat's cinema</span>
+      <span class="hidden xl:block text-2xl font-bold ml-2">Spinning rat's cinema</span>
     </router-link>
 
     <div class="flex flex-grow">
-      <div class="join flex-grow flex">
+      <div class="join join-vertical lg:join-horizontal flex-grow flex">
         <router-link to="/Movies" class="btn btn-ghost no-animation join-item flex-grow"
           >Movies</router-link
         >
@@ -34,7 +34,7 @@ import { RouterLink } from 'vue-router'
       </div>
     </div>
 
-    <div class="flex gap-2 justify-end">
+    <div class="flex flex-col lg:flex-row-reverse gap-2 justify-end">
       <div class="form-control">
         <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
       </div>
