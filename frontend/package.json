@@ -4,12 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --config ./config/vite.config.ts",
+    "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
-    "preview": "vite preview --config ./config/vite.config.ts",
-    "build-only": "vite build --config ./config/vite.config.ts",
+    "preview": "vite preview",
+    "build-only": "vite build",
     "type-check": "vue-tsc --build --force",
-    "lint": "eslint --config ./config/eslint.config.js . --fix",
+    "lint": "eslint . --fix",
     "format": "prettier --write src/"
   },
   "dependencies": {

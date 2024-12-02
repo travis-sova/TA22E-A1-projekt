@@ -1,11 +1,12 @@
-import path from 'path'
+/** @type {import('tailwindcss').Config} */
+
 import daisyui from 'daisyui'
 import { light } from 'daisyui/src/theming/themes'
 
 export default {
   content: [
-    path.resolve(__dirname, '../index.html'),
-    path.resolve(__dirname, '../src/**/*.{vue,js,ts,jsx,tsx}'),
+    "./index.html",
+    "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
