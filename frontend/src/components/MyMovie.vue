@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
+import { ref } from 'vue'
+
+import spiderman from '@/assets/spiderman.webp'
 
 onMounted(() => {
   const round = document.getElementsByClassName('round')
@@ -9,29 +12,35 @@ onMounted(() => {
   const roundDraw = (+roundPercent * roundCircum) / 100
   round[0].style.strokeDasharray = roundDraw + ' 999'
 })
+
+const seatPercent = ref(65)
+const seats = ref(11)
 </script>
 
 <template>
   <div class="card card-side bg-secondary max-w-xl shadow-xl m-10 pl-5 py-3 text-primary">
     <figure>
-      <img
-        src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
-        alt="Movie"
-      />
+      <img :src="spiderman" alt="Movie" />
     </figure>
     <div class="card-body">
       <h2 class="card-title">Spiderman</h2>
       <p>Action</p>
       <div class="container flex card-actions jusify-between items-start">
         <div class="svg-container">
-          <svg class="round" viewbox="0 0 100 100" width="50" height="50" data-percent="65">
+          <svg
+            class="round"
+            viewbox="0 0 100 100"
+            width="50"
+            height="50"
+            :data-percent="seatPercent"
+          >
             <circle cx="25" cy="25" r="20" />
           </svg>
         </div>
 
         <div class="flex-grow content-container">
           <p>Available seats</p>
-          <p>11</p>
+          <p>{{ seats }}</p>
         </div>
         <button class="btn btn-primary watch-button">Watch</button>
       </div>
