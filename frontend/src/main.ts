@@ -11,6 +11,7 @@ import MyEvents from '@/views/MyEvents.vue'
 import MyTickets from '@/views/MyTickets.vue'
 import MyProfile from '@/views/MyProfile.vue'
 import MySettings from '@/views/MySettings.vue'
+import My404Error from '@/views/My404Error.vue'
 
 import App from './App.vue'
 //import router from './router'
@@ -27,6 +28,7 @@ const router = createRouter({
     { path: '/Tickets', name: 'Tickets', component: MyTickets },
     { path: '/Profile', name: 'Profile', component: MyProfile },
     { path: '/Settings', name: 'Settings', component: MySettings },
+    { path: '/:pathMatch(.*)*', name: '404error', component: My404Error },
   ],
 })
 

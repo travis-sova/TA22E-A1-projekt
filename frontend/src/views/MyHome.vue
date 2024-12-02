@@ -1,13 +1,47 @@
 <script setup lang="ts">
 import MyCarousel from '@/components/MyCarousel.vue'
 import MyShows from '@/components/MyShows.vue'
-import MyMovie from '@/components/MyMovie.vue'
+import MyMoviecard from '@/components/MyMoviecard.vue'
+
 </script>
 
 <template>
-  <MyCarousel />
-  <MyShows />
-  <MyMovie />
+  <div>
+    <MyCarousel />
+    <MyShows />
+    <div class="movie-cards-container">
+      <div class="movie-cards">
+        <MyMoviecard />
+      </div>
+    </div>    
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.movie-cards-container {
+  display: flex;
+  justify-content: center; /* Center the grid horizontally */
+  align-items: center; /* Center the grid vertically */
+  width: 100%;
+}
+
+.movie-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns by default */
+  gap: 20px; /* Increase gap for better spacing */
+  max-width: 1200px;
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .movie-cards {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .movie-cards {
+    grid-template-columns: repeat(1, 1fr); /* 1 column for smaller screens */
+  }
+}
+</style>
