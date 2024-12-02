@@ -1,0 +1,1 @@
+Configi nestimise jaoks
