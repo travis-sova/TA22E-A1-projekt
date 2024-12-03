@@ -18,11 +18,8 @@ onMounted(() => {
 
 <template>
   <div class="movie-cards">
-    <div
-      v-for="movie in movieList"
-      :key="movie.id"
-      class="card card-side bg-secondary max-w-xl shadow-xl m-10 pl-5 py-3 text-primary"
-    >
+    <div v-for="movie in movieList" :key="movie.id"
+      class="card card-side bg-secondary max-w-xl shadow-xl m-10 pl-5 py-3 text-primary">
       <figure>
         <img :src="movie.img" :alt="movie.name" />
       </figure>
@@ -31,18 +28,11 @@ onMounted(() => {
         <p>{{ movie.genre }}</p>
         <div class="container flex card-actions jusify-between items-start">
           <div class="svg-container">
-            <svg
-              class="round"
-              viewbox="0 0 100 100"
-              width="50"
-              height="50"
-              :data-percent="movie.seats"
-              :class="{
-                'low-seats': movie.seats < 20,
-                'medium-seats': movie.seats >= 20 && movie.seats < 50,
-                'high-seats': movie.seats >= 50
-              }"
-            >
+            <svg class="round" viewbox="0 0 100 100" width="50" height="50" :data-percent="movie.seats" :class="{
+              'low-seats': movie.seats < 20,
+              'medium-seats': movie.seats >= 20 && movie.seats < 50,
+              'high-seats': movie.seats >= 50
+            }">
               <circle cx="25" cy="25" r="20" />
             </svg>
           </div>
@@ -51,7 +41,9 @@ onMounted(() => {
             <p>Available seats</p>
             <p>{{ movie.seats }}</p>
           </div>
-          <button class="btn btn-primary watch-button">Watch</button>
+          <router-link :to="{ name: 'MovieDetails', params: { id: movie.id } }" class="btn btn-primary watch-button">
+            Watch
+          </router-link>
         </div>
       </div>
     </div>
@@ -59,7 +51,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-
 .round {
   transform: rotate(-90deg);
   transition: all 1s ease-in-out;
@@ -77,7 +68,7 @@ onMounted(() => {
   flex-wrap: wrap;
   gap: 10px;
   justify-content: center;
-  max-width: 500px; 
+  max-width: 500px;
   display: flex;
   flex-direction: column;
 }
@@ -124,14 +115,19 @@ img {
 }
 
 .card-title {
-  white-space: normal; /* Allow text to wrap */
-  overflow: visible; /* Ensure text is visible */
-  text-overflow: clip; /* Prevent text from being clipped */
+  white-space: normal;
+  /* Allow text to wrap */
+  overflow: visible;
+  /* Ensure text is visible */
+  text-overflow: clip;
+  /* Prevent text from being clipped */
 }
 
 p {
-  word-wrap: break-word; /* Ensure long words break and wrap */
-  white-space: normal; /* Allow text to wrap */
+  word-wrap: break-word;
+  /* Ensure long words break and wrap */
+  white-space: normal;
+  /* Allow text to wrap */
 }
 
 .watch-button {
