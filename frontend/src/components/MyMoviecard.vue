@@ -19,7 +19,7 @@ onMounted(() => {
 <template>
   <div class="movie-cards">
     <div v-for="movie in movieList" :key="movie.id"
-      class="card card-side bg-secondary max-w-xl shadow-xl m-10 pl-5 py-3 text-primary">
+      class="card card-side bg-secondary max-w-xl shadow-xl m-10 pl-5 py-3 dark:text-white text-primary">
       <figure>
         <img :src="movie.img" :alt="movie.name" />
       </figure>
@@ -33,7 +33,7 @@ onMounted(() => {
               'medium-seats': movie.seats >= 20 && movie.seats < 50,
               'high-seats': movie.seats >= 50
             }">
-              <circle cx="25" cy="25" r="20" />
+              <circle cx="25" cy="25" r="20"/>
             </svg>
           </div>
 
@@ -41,7 +41,7 @@ onMounted(() => {
             <p>Available seats</p>
             <p>{{ movie.seats }}</p>
           </div>
-          <router-link :to="{ name: 'MovieDetails', params: { id: movie.id } }" class="btn btn-primary watch-button">
+          <router-link :to="{ name: 'MovieDetails', params: { id: movie.id } }" class="btn btn-accent watch-button">
             Watch
           </router-link>
         </div>
