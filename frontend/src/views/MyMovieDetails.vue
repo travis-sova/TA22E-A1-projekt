@@ -14,15 +14,11 @@ if (!movie) {
 
 <template>
     <div class="container mx-auto p-6">
-      <!-- Main Card -->
       <div class="card shadow-xl dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg">
         <div class="flex">
-          <!-- Movie Image -->
           <figure class="w-1/3">
             <img :src="movie.img" :alt="movie.name" class="w-full h-full object-cover rounded-l-lg" />
           </figure>
-  
-          <!-- Movie Info -->
           <div class="card-body w-2/3 p-6">
             <h2 class="card-title text-4xl font-bold">{{ movie.name }}</h2>
             <div
@@ -32,9 +28,7 @@ if (!movie) {
             <p class="text-gray-700 dark:text-gray-300 text-lg mb-6">
               {{ movie.description }}
             </p>
-  
             <div class="flex justify-between items-center mt-6">
-              <!-- Stats Section -->
               <div
                 class="stats shadow bg-gray-200 dark:bg-gray-900 text-gray-800 dark:text-gray-300 rounded-lg">
                 <div class="stat">
@@ -48,12 +42,10 @@ if (!movie) {
                     Rating
                   </div>
                   <div class="stat-value text-green-600 dark:text-green-400">
-                    {{ movie.rating }}%
+                    {{ movie.rating }}/100
                   </div>
                 </div>
               </div>
-  
-              <!-- Back Button -->
               <router-link to="/Movies" class="btn btn-outline btn-primary dark:btn-accent mt-4 sm:mt-0 sm:ml-6">
                 Back to Movies
               </router-link>
@@ -66,7 +58,7 @@ if (!movie) {
   
   <style scoped>
   .container {
-    max-width: 800px;
+    max-width: 900px;
   }
   </style>
   

@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
-import daisyui from 'daisyui'
-import { light } from 'daisyui/src/theming/themes'
+import daisyui from "daisyui";
+import { dark, light } from "daisyui/src/theming/themes";
 
 export default {
   content: [
@@ -11,25 +11,37 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Poppins', 'sans-serif']
+        sans: ["Poppins", "sans-serif"],
       },
     },
   },
-  plugins: [
-    daisyui,
-  ],
+  plugins: [daisyui],
   daisyui: {
     themes: [
-      "dark",
       {
         light: {
           ...light,
           "base-100": "#D9D9D9",
-          "primary-content": "#000000",
+          "base-200": "#F5F5F5",
+          "base-300": "#E0E0E0",
           "primary": "#FFFFFF",
+          "primary-content": "#000000",
           "secondary": "#363636",
+          "neutral": "#E5E7EB",
+        },
+      },
+      {
+        dark: {
+          ...dark,
+          "base-100": "#1E1E1E",
+          "base-200": "#282828",
+          "base-300": "#131313",
+          "primary": "#2E2E2E",
+          "primary-content": "#E4E4E4",
+          "secondary": "#363636",
+          "neutral": "#1F1F1F",
         },
       },
     ],
   },
-}
+};
