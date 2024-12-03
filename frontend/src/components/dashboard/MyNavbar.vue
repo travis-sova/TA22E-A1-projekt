@@ -50,7 +50,7 @@ import { RouterLink } from 'vue-router'
         >
           <li><router-link to="/Profile">Profile</router-link></li>
           <li><router-link to="/Settings">Settings</router-link></li>
-          <li><a>Logout</a></li>
+          <li><a onclick="alert('Not implemented yet')">Logout</a></li>
         </ul>
       </div>
       <label class="swap swap-rotate">
