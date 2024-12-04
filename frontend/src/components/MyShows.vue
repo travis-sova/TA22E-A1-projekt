@@ -7,12 +7,9 @@
     <li><a>Showtimes</a></li>
   </ul>
   <form
-    class="menu menu-vertical lg:menu-horizontal w-full justify-start bg-secondary text-primary"
+    class="menu menu-vertical lg:menu-horizontal w-full justify-start bg-secondary text-primary\"
   >
     <div class="mx-5">
-      <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >Select an option</label
-      >
       <select
         id="date"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -25,9 +22,6 @@
       </select>
     </div>
     <div class="mx-5">
-      <label for="genre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >Select an option</label
-      >
       <select
         id="genre"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -40,9 +34,6 @@
       </select>
     </div>
     <div class="mx-5">
-      <label for="showtime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >Select an option</label
-      >
       <select
         id="showtime"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
