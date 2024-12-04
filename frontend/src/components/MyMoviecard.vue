@@ -1,25 +1,28 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import movies from '../../data/movies.js';
+import { onMounted, ref } from 'vue'
+import movies from '../../data/movies.js'
 
-const movieList = ref(movies);
+const movieList = ref(movies)
 
 onMounted(() => {
-  const rounds = document.getElementsByClassName('round');
+  const rounds = document.getElementsByClassName('round')
   Array.from(rounds).forEach((round) => {
-    const roundRadius = round.getElementsByTagName('circle')[0].getAttribute('r');
-    const roundPercent = round.getAttribute('data-percent');
-    const roundCircum = 2 * +roundRadius * Math.PI;
-    const roundDraw = (+roundPercent * roundCircum) / 100;
-    (round as HTMLElement).style.strokeDasharray = roundDraw + ' 999';
-  });
-});
+    const roundRadius = round.getElementsByTagName('circle')[0].getAttribute('r')
+    const roundPercent = round.getAttribute('data-percent')
+    const roundCircum = 2 * +roundRadius * Math.PI
+    const roundDraw = (+roundPercent * roundCircum) / 100
+    ;(round as HTMLElement).style.strokeDasharray = roundDraw + ' 999'
+  })
+})
 </script>
 
 <template>
   <div class="movie-cards">
-    <div v-for="movie in movieList" :key="movie.id"
-      class="card card-side bg-secondary max-w-xl shadow-xl m-10 pl-5 py-3 dark:text-white text-primary">
+    <div
+      v-for="movie in movieList"
+      :key="movie.id"
+      class="card card-side bg-secondary max-w-xl shadow-xl m-10 pl-5 py-3 text-primary-content"
+    >
       <figure>
         <img :src="movie.img" :alt="movie.name" />
       </figure>
@@ -28,12 +31,19 @@ onMounted(() => {
         <p>{{ movie.genre }}</p>
         <div class="container flex card-actions jusify-between items-start">
           <div class="svg-container">
-            <svg class="round" viewbox="0 0 100 100" width="50" height="50" :data-percent="movie.seats" :class="{
-              'low-seats': movie.seats < 20,
-              'medium-seats': movie.seats >= 20 && movie.seats < 50,
-              'high-seats': movie.seats >= 50
-            }">
-              <circle cx="25" cy="25" r="20"/>
+            <svg
+              class="round"
+              viewbox="0 0 100 100"
+              width="50"
+              height="50"
+              :data-percent="movie.seats"
+              :class="{
+                'low-seats': movie.seats < 20,
+                'medium-seats': movie.seats >= 20 && movie.seats < 50,
+                'high-seats': movie.seats >= 50,
+              }"
+            >
+              <circle cx="25" cy="25" r="20" />
             </svg>
           </div>
 
@@ -41,7 +51,10 @@ onMounted(() => {
             <p>Available seats</p>
             <p>{{ movie.seats }}</p>
           </div>
-          <router-link :to="{ name: 'MovieDetails', params: { id: movie.id } }" class="btn btn-accent watch-button">
+          <router-link
+            :to="{ name: 'MovieDetails', params: { id: movie.id } }"
+            class="btn btn-accent watch-button"
+          >
             Watch
           </router-link>
         </div>
@@ -72,8 +85,6 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
 }
-
-
 
 .low-seats {
   stroke: red;
