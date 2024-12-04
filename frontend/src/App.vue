@@ -5,8 +5,8 @@ import MyFooter from '@/components/dashboard/MyFooter.vue';
 
 <template>
   <MyNavbar />
-  <router-view />
-  <MyFooter />
+  <router-view class="min-h-screen" />
+  <MyFooter class="top-100" />
 </template>
 
 <style scoped></style>
