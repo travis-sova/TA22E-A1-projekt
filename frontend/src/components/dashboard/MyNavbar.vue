@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import logo from '@/assets/logo.svg'
 import user from '@/assets/user.png'
+import userD from '@/assets/userD.png'
 import est from '@/assets/flags/est.png'
 import uk from '@/assets/flags/uk.png'
 import ger from '@/assets/flags/ger.png'
@@ -41,7 +42,21 @@ import { RouterLink } from 'vue-router'
       <div class="dropdown dropdown-end">
         <div tabindex="0" role="button" class="btn btn-ghost btn-square avatar">
           <div class="w-auto h-10">
-            <img alt="User" :src="user" />
+            <svg
+              class="fill-current"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              width="48"
+              height="48"
+              viewBox="0, 0, 480, 500"
+            >
+              <g id="svgg">
+                <path
+                  d="M161.486 61.974 C 108.220 85.157,88.795 164.580,125.102 210.736 L 141.870 232.054 117.796 249.196 C 90.346 268.742,66.667 313.116,66.667 345.009 C 66.667 377.575,81.513 371.040,91.462 334.095 C 121.524 222.450,278.476 222.450,308.538 334.095 C 318.487 371.040,333.333 377.575,333.333 345.009 C 333.333 313.203,309.678 268.759,282.417 249.348 L 258.556 232.357 276.248 208.428 C 334.792 129.242,251.412 22.836,161.486 61.974 M232.573 87.107 C 314.089 129.260,254.185 251.495,171.289 212.158 C 116.924 186.360,113.776 115.735,165.734 87.497 C 193.620 72.341,203.904 72.281,232.573 87.107 "
+                  stroke="none"
+                ></path>
+              </g>
+            </svg>
           </div>
         </div>
         <ul
@@ -55,7 +70,7 @@ import { RouterLink } from 'vue-router'
       </div>
       <label class="swap swap-rotate">
         <!-- this hidden checkbox controls the state -->
-        <input type="checkbox" class="theme-controller" value="light" />
+        <input type="checkbox" class="theme-controller" value="dark" />
 
         <!-- sun icon -->
         <svg
