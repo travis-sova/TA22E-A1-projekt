@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import logo from '@/assets/logo.svg'
-import user from '@/assets/user.png'
-import userD from '@/assets/userD.png'
 import est from '@/assets/flags/est.png'
 import uk from '@/assets/flags/uk.png'
 import ger from '@/assets/flags/ger.png'
