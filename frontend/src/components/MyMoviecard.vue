@@ -1,8 +1,50 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch, defineProps } from 'vue'
 import movies from '../../data/movies.js'
 
-const movieList = ref(movies)
+const movieList = ref([...movies]);
+
+
+// Props for genre and title sorting options
+const props = defineProps({
+  selectedGenre: {
+    type: String,
+    default: "All",
+  },
+  sortTitleOption: {
+    type: String,
+    default: "A-Z",
+  },
+});
+
+// Watch for changes in genre and title sorting props
+// Watch props directly for changes
+watch(
+  () => [props.selectedGenre, props.sortTitleOption],
+  ([selectedGenre, sortTitleOption]) => {
+    filterAndSortMovies(selectedGenre, sortTitleOption);
+  },
+  { immediate: true }
+);
+
+// Filter and sort movies
+function filterAndSortMovies(genre: string, titleSort: string) {
+  let filteredMovies = [...movies];
+
+  // Filter by genre if not "All"
+  if (genre !== "All") {
+    filteredMovies = filteredMovies.filter((movie) => movie.genre === genre);
+  }
+
+  // Sort by title
+  if (titleSort === "A-Z") {
+    filteredMovies.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (titleSort === "Z-A") {
+    filteredMovies.sort((a, b) => b.name.localeCompare(a.name));
+  }
+
+  movieList.value = filteredMovies;
+}
 
 onMounted(() => {
   const rounds = document.getElementsByClassName('round')
@@ -29,7 +71,7 @@ onMounted(() => {
       <div class="card-body">
         <h2 class="card-title">{{ movie.name }}</h2>
         <p>{{ movie.genre }}</p>
-        <div class="container flex card-actions jusify-between items-start">
+        <div class="container flex card-actions justify-between items-start">
           <div class="svg-container">
             <svg
               class="round"
@@ -46,7 +88,6 @@ onMounted(() => {
               <circle cx="25" cy="25" r="20" />
             </svg>
           </div>
-
           <div class="flex-grow content-container">
             <p>Available seats</p>
             <p>{{ movie.seats }}</p>
