@@ -1,52 +1,59 @@
 <script setup lang="ts">
-import { onMounted, ref, watch, defineProps } from 'vue'
+import { onMounted, ref, watch, defineProps, onUpdated } from 'vue'
 import movies from '../../data/movies.js'
 
-const movieList = ref([...movies]);
-
+const movieList = ref([...movies])
 
 // Props for genre and title sorting options
 const props = defineProps({
   selectedGenre: {
     type: String,
-    default: "All",
+    default: 'All',
   },
   sortTitleOption: {
     type: String,
-    default: "A-Z",
+    default: 'A-Z',
   },
-});
+})
 
 // Watch for changes in genre and title sorting props
 // Watch props directly for changes
 watch(
   () => [props.selectedGenre, props.sortTitleOption],
   ([selectedGenre, sortTitleOption]) => {
-    filterAndSortMovies(selectedGenre, sortTitleOption);
+    filterAndSortMovies(selectedGenre, sortTitleOption)
   },
-  { immediate: true }
-);
+  { immediate: true },
+)
 
 // Filter and sort movies
 function filterAndSortMovies(genre: string, titleSort: string) {
-  let filteredMovies = [...movies];
+  let filteredMovies = [...movies]
 
   // Filter by genre if not "All"
-  if (genre !== "All") {
-    filteredMovies = filteredMovies.filter((movie) => movie.genre === genre);
+  if (genre !== 'All') {
+    filteredMovies = filteredMovies.filter((movie) => movie.genre === genre)
   }
 
   // Sort by title
-  if (titleSort === "A-Z") {
-    filteredMovies.sort((a, b) => a.name.localeCompare(b.name));
-  } else if (titleSort === "Z-A") {
-    filteredMovies.sort((a, b) => b.name.localeCompare(a.name));
+  if (titleSort === 'A-Z') {
+    filteredMovies.sort((a, b) => a.name.localeCompare(b.name))
+  } else if (titleSort === 'Z-A') {
+    filteredMovies.sort((a, b) => b.name.localeCompare(a.name))
   }
 
-  movieList.value = filteredMovies;
+  movieList.value = filteredMovies
 }
 
 onMounted(() => {
+  updateSeats()
+})
+
+onUpdated(() => {
+  updateSeats()
+})
+
+function updateSeats() {
   const rounds = document.getElementsByClassName('round')
   Array.from(rounds).forEach((round) => {
     const roundRadius = round.getElementsByTagName('circle')[0].getAttribute('r')
@@ -55,7 +62,7 @@ onMounted(() => {
     const roundDraw = (+roundPercent * roundCircum) / 100
     ;(round as HTMLElement).style.strokeDasharray = roundDraw + ' 999'
   })
-})
+}
 </script>
 
 <template>
