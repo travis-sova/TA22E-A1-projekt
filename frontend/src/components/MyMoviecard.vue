@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch, defineProps, onUpdated } from 'vue'
+import { onMounted, ref, watch, onUpdated } from 'vue'
 import movies from '../../data/movies.js'
 
 const movieList = ref([...movies])
