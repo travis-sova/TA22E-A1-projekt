@@ -1,4 +1,25 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { defineProps, defineEmits, ref } from "vue";
+import movies from "../../data/movies.js";
+import MyMoviecard from "./MyMoviecard.vue";
+
+
+const emits = defineEmits(['sort-option-changed']);
+// Extract unique genres from the movies list
+const genres = ref([...new Set(movies.map((movie) => movie.genre))]);
+const selectedGenre = ref("All"); // Default: Show all genres
+const sortTitleOption = ref("A-Z"); // Default: Sort titles A-Z
+
+function updateGenre(option: string) {
+  selectedGenre.value = option;
+  emits('sort-option-changed', { genre: selectedGenre.value, title: sortTitleOption.value });
+}
+
+function updateTitleSort(option: string) {
+  sortTitleOption.value = option;
+  emits('sort-option-changed', { genre: selectedGenre.value, title: sortTitleOption.value });
+}
+</script>
 
 <template>
   <ul class="menu menu-vertical sm:menu-horizontal bg-base-200 w-full justify-center">
@@ -21,18 +42,34 @@
         <option value="DE">Wednesday, 27.11.2024</option>
       </select>
     </div>
+    <!-- Genre dropdown -->
     <div class="mx-5">
       <select
-        id="genre"
+        id="genre-select"
+        v-model="selectedGenre"
+        @change="updateGenre(selectedGenre)"
         class="bg-primary border border-gray-300 text-primary-content text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
       >
-        <option selected>All genres</option>
-        <option value="US">Comdey</option>
-        <option value="CA">Drama</option>
-        <option value="FR">Sci-fi</option>
-        <option value="DE">Horror</option>
+      <option value="All">All Genres</option>
+      <option v-for="genre in genres" :key="genre" :value="genre">
+        {{ genre }}
+      </option>
       </select>
     </div>
+    <!-- title sort dropdown -->
+    <div class="mx-5">
+      <select
+        id="title-sort-select"
+        v-model="sortTitleOption"
+        @change="updateTitleSort(sortTitleOption)"
+        class="bg-primary border border-gray-300 text-primary-content text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+      >
+      <option value="A-Z">A-Z</option>
+      <option value="Z-A">Z-A</option>
+    </select>
+    </div>
+    
+    
     <div class="mx-5">
       <select
         id="showtime"
@@ -41,9 +78,11 @@
         <option selected>Showtime</option>
         <option value="US">Mida?</option>
       </select>
+      
     </div>
   </form>
 </template>
+
 
 <style scoped>
 a {
