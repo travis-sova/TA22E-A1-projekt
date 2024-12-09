@@ -130,7 +130,6 @@ function updateSeats() {
   gap: 10px;
   justify-content: center;
   max-width: 500px;
-  display: flex;
   flex-direction: column;
 }
 
@@ -148,7 +147,7 @@ function updateSeats() {
 
 img {
   width: 200px;
-  height: 250px;
+  max-height: 235px;
 }
 
 .container {
@@ -175,18 +174,14 @@ img {
 
 .card-title {
   white-space: normal;
-  /* Allow text to wrap */
   overflow: visible;
-  /* Ensure text is visible */
   text-overflow: clip;
-  /* Prevent text from being clipped */
 }
 
-p {
+h2 {
   word-wrap: break-word;
-  /* Ensure long words break and wrap */
   white-space: normal;
-  /* Allow text to wrap */
+  max-width: 150px;
 }
 
 .watch-button {
