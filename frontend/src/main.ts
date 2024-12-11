@@ -33,6 +33,9 @@ const router = createRouter({
     { path: '/Movies/:id', name: 'MovieDetails', component: MyMovieDetails, props: true },
 
   ],
+  scrollBehavior () {
+    return { top: 0, left: 0 }
+  }
 })
 
 app
