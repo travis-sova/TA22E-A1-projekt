@@ -68,7 +68,7 @@ import { RouterLink } from 'vue-router'
       </div>
       <label class="swap swap-rotate">
         <!-- this hidden checkbox controls the state -->
-        <input type="checkbox" class="theme-controller" value="light" />
+        <input type="checkbox" class="theme-controller" value="darky" />
 
         <!-- sun icon -->
         <svg

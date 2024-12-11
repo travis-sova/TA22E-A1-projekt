@@ -19,7 +19,7 @@ export default {
   daisyui: {
     themes: [
       {
-        light: {
+        lighty: {
           ...light,
           "base-100": "#D9D9D9",
           "base-200": "#F5F5F5",
@@ -34,7 +34,7 @@ export default {
         },
       },
       {
-        dark: {
+        darky: {
           ...dark,
           "base-100": "#1E1E1E",
           "base-200": "#282828",
@@ -49,5 +49,6 @@ export default {
         },
       },
     ],
+
   },
 };
