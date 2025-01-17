@@ -1,0 +1,20 @@
+{
+  "name": "cinema",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "all": "cd frontend && npm install && cd .. && cd backend && npm install",
+    "start": "echo \"Error: not available yet\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/travis-sova/TA22E-A1-projekt"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/travis-sova/TA22E-A1-projekt/issues"
+  },
+  "homepage": "https://github.com/travis-sova/TA22E-A1-projekt#readme"
+}
