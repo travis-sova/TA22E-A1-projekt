@@ -61,7 +61,6 @@ import { RouterLink } from 'vue-router'
           tabindex="0"
           class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
         >
-          <li><router-link to="/Profile">Profile</router-link></li>
           <li><router-link to="/Settings">Settings</router-link></li>
           <li><a onclick="alert('Not implemented yet')">Logout</a></li>
         </ul>
