@@ -1,7 +1,7 @@
 {
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.patterns": {
-    "config.md": "*.json, *.config.js, *.config.ts, env.d.ts, .editorconfig"
+    "config.md": "*.json,*.config.js,*.config.ts,env.d.ts,.editorconfig"
   },
   "editor.codeActionsOnSave": {
     "source.fixAll": "always"
