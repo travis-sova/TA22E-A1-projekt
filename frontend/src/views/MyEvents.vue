@@ -1,7 +1,33 @@
-<script setup lang="ts"></script>
-
 <template>
-  <div>
-    <h1>Events</h1>
+  <div class="p-8 bg-base-200 min-h-screen">
+    <h1 class="text-4xl font-bold text-center mb-8">Upcoming Events</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <EventCard
+        v-for="(event, index) in events"
+        :key="index"
+        :event="event"
+      />
+    </div>
   </div>
 </template>
+
+<script lang="ts">
+import { events } from "@/../data/events.js";
+import EventCard from "@/components/MyEventcard.vue";
+
+export default {
+  components: {
+    EventCard,
+  },
+  data() {
+    return {
+      events,
+    };
+  },
+};
+</script>
+
+<style scoped>
+
+</style>
