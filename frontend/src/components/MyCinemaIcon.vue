@@ -36,7 +36,9 @@ export default {
   methods: {
     updateIconScale() {
       const baseScreenWidth = 1920
-      this.iconScale = Math.min(1, window.innerWidth / baseScreenWidth)
+      // Minimum Scale to prevent icons from becoming too small
+      const minScale = 0.6
+      this.iconScale = Math.max(minScale, Math.min(1, window.innerWidth / baseScreenWidth))
     },
   },
 }
