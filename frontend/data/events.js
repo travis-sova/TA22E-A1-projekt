@@ -1,26 +1,32 @@
 export const events = [
   {
+    id: 1,
     title: 'Premiere Night: Underwater Adventures',
     description: 'Join us for the exclusive premiere of the latest underwater-themed blockbuster!',
     date: '2025-02-15',
     time: '7:00 PM',
     location: 'Ülemiste Järve Underwater Cinema',
     image: '@/../src/assets/events/premiereNight.webp',
+    seats: 18,
   },
   {
+    id: 2,
     title: 'Cylindrical Classics: Retro Night',
     description: 'Experience the classics like never before in the iconic cylindrical cinema!',
     date: '2025-02-20',
     time: '8:00 PM',
     location: 'Õismäe ring Central Cinema',
     image: '@/../src/assets/events/retroNight.webp',
+    seats: 69,
   },
   {
+    id: 3,
     title: 'Indie Film Festival',
     description: 'Celebrate creativity with the best indie films from around the world.',
     date: '2025-03-01',
     time: '5:00 PM',
     location: 'Balti Jaama Cinema',
     image: '@/../src/assets/events/indieFilm.webp',
+    seats: 50,
   },
 ]
