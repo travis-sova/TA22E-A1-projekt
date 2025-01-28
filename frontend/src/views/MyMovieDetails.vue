@@ -49,6 +49,11 @@ if (!movie) {
             <router-link to="/Movies" class="btn btn-accent mt-4 sm:mt-0 sm:ml-6">
               Back
             </router-link>
+            <router-link 
+            :to="{ name: 'Tickets', params: { id: movie.id } }" 
+            class="btn btn-accent mt-4 sm:mt-0 sm:ml-6">
+              Buy tickets
+            </router-link>
           </div>
         </div>
       </div>
@@ -58,6 +63,6 @@ if (!movie) {
 
 <style scoped>
 .container {
-  max-width: 900px;
+  max-width: 1000px;
 }
 </style>
