@@ -24,9 +24,6 @@ import { RouterLink } from 'vue-router'
         <router-link to="/Events" class="btn btn-ghost no-animation join-item flex-grow"
           >Events</router-link
         >
-        <router-link to="/Tickets" class="btn btn-ghost no-animation join-item flex-grow"
-          >Tickets</router-link
-        >
         <router-link to="/News" class="btn btn-ghost no-animation join-item flex-grow"
           >News</router-link
         >
