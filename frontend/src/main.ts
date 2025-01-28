@@ -14,6 +14,7 @@ import My404Error from '@/views/My404Error.vue'
 import MyMovieDetails from '@/views/MyMovieDetails.vue'
 
 import App from './App.vue'
+import MyPurchase from './views/MyPurchase.vue'
 //import router from './router'
 
 const app = createApp(App)
@@ -25,10 +26,11 @@ const router = createRouter({
     { path: '/Movies', name: 'Movies', component: MyMovies },
     { path: '/Cinemas', name: 'Cinemas', component: MyCinemas },
     { path: '/Events', name: 'Events', component: MyEvents },
-    { path: '/Tickets', name: 'Tickets', component: MyTickets },
+    { path: '/Tickets/:id', name: 'Tickets', component: MyTickets, props: true },
     { path: '/Settings', name: 'Settings', component: MySettings },
     { path: '/:pathMatch(.*)*', name: '404error', component: My404Error },
     { path: '/Movies/:id', name: 'MovieDetails', component: MyMovieDetails, props: true },
+    { path: '/Purchase/:id', name: 'Purchase', component: MyPurchase, props: true },
   ],
   scrollBehavior() {
     return { top: 0, left: 0 }
