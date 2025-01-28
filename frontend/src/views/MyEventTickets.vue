@@ -1,17 +1,17 @@
 <template>
   <div class="container mx-auto p-6">
     <div class="card shadow-xl bg-primary text-primary-content rounded-lg p-6">
-      <h2 class="text-3xl font-bold mb-4">{{ movie.name }}</h2>
-      <p class="text-lg text-primary-content mb-6">{{ movie.description }}</p>
-
-      <div class="stats shadow bg-secondary text-primary-content rounded-lg p-4 mb-4">
-        <div class="stat">
-          <div class="stat-title text-primary-content">Available Seats</div>
-          <div class="stat-value text-primary-content">{{ availableSeats }}</div>
-        </div>
-      </div>
+      <h2 class="text-3xl font-bold mb-4">{{ event.title }}</h2>
+      <p class="text-lg text-primary-content mb-6">{{ event.description }}</p>
 
       <div class="bg-secondary p-4 rounded-lg shadow">
+        <div class="border-b-2 border-primary py-3">
+          <p><strong>Date:</strong> {{ event.date }}</p>
+          <p><strong>Time:</strong> {{ event.time }}</p>
+          <p><strong>Location:</strong> {{ event.location }}</p>
+          <p><strong>Available Seats:</strong> {{ event.seats }}</p>
+        </div>
+
         <div v-for="ticket in tickets" :key="ticket.type"
           class="flex justify-between items-center py-3 border-b-2 border-primary">
           <div>
@@ -24,7 +24,7 @@
               :disabled="ticketCounts[ticket.type] === 0">−</button>
             <span class="mx-2 text-primary-content">{{ ticketCounts[ticket.type] }}</span>
             <button @click="increaseCount(ticket.type)" class="btn btn-sm btn-accent"
-              :disabled="totalTickets >= movie.seats">+</button>
+              :disabled="totalTickets >= event.seats">+</button>
           </div>
         </div>
       </div>
@@ -34,16 +34,15 @@
       </div>
 
       <div class="mt-6 flex justify-center gap-4">
-        <router-link :to="`/movies/${movie.id}`" class="btn btn-lg btn-accent">
+        <router-link :to="'/events'" class="btn btn-lg btn-accent">
           Back
         </router-link>
-
-        <router-link :to="{ name: 'Purchase', params: { id: movie.id }, query: { total: totalPrice } }"
+        <router-link :to="{ name: 'EventPurchase', params: { id: event.id }, query: { total: totalPrice } }"
           class="btn btn-lg btn-accent" :class="{ 'opacity-50 pointer-events-none': totalTickets === 0 }">
           Purchase Tickets
         </router-link>
-      </div>
 
+      </div>
     </div>
   </div>
 </template>
@@ -51,22 +50,24 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
-import movies from '../../data/movies.js';
+import { events } from '../../data/events.js';
 
 const route = useRoute();
-const movieId = Number(route.params.id);
-const movie = movies.find(m => m.id === movieId);
-if (!movie) throw new Error(`Movie with ID ${movieId} not found`);
+const eventId = Number(route.params.id);
 
+const event = events.find((e) => e.id === eventId);
+
+if (!event) {
+  throw new Error(`Event with ID ${eventId} not found`);
+}
 
 const ticketCounts = ref({ Adult: 0, Student: 0, Senior: 0, Child: 0 });
 const tickets = [
-  { type: 'Adult', label: 'Regular ticket', price: '10.60', description: '' },
-  { type: 'Student', label: 'Student ticket', price: '8.38', description: 'Applicable only with valid Student Card' },
-  { type: 'Senior', label: 'Senior ticket', price: '6.45', description: 'Applicable only with valid ID' },
-  { type: 'Child', label: 'Kids ticket', price: '6.45', description: 'Up to 12 years (incl.)' },
+  { type: 'Adult', label: 'Regular ticket', price: '20.99', description: '' },
+  { type: 'Student', label: 'Student ticket', price: '15.49', description: 'Applicable only with valid Student Card' },
+  { type: 'Senior', label: 'Senior ticket', price: '15.49', description: 'Applicable only with valid ID' },
+  { type: 'Child', label: 'Kids ticket', price: '10.60', description: 'Up to 12 years (incl.)' },
 ];
-const availableSeats = ref(movie.seats);
 
 const totalTickets = computed(() =>
   Object.values(ticketCounts.value).reduce((sum, count) => sum + count, 0)
@@ -80,7 +81,7 @@ const totalPrice = computed(() =>
 );
 
 function increaseCount(type) {
-  if (totalTickets.value < movie.seats) {
+  if (totalTickets.value < event.seats) {
     ticketCounts.value[type]++;
   }
 }
@@ -90,17 +91,9 @@ function decreaseCount(type) {
     ticketCounts.value[type]--;
   }
 }
-console.log('Route Params:', route.params);
-console.log('Route Query:', route.query);
+
+console.log('Event:', event);
+console.log('Total Price:', totalPrice);
 </script>
 
-<style scoped>
-.btn {
-  padding: 8px 12px;
-  border-radius: 6px;
-}
-
-.btn-sm {
-  padding: 4px 8px;
-}
-</style>
+<style scoped></style>
