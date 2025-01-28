@@ -35,7 +35,7 @@
           <div class="grid grid-cols-10 gap-2">
             <button v-for="seat in seatLayout" :key="seat.id" @click="toggleSeatSelection(seat.id)" :class="[
               'w-10 h-10 rounded-lg',
-              seat.reserved ? 'bg-error text-error' : seat.selected ? 'bg-success text-white' : 'bg-neutral text-primary-content'
+              seat.reserved ? 'bg-error text-error' : seat.selected ? 'bg-success text-white' : 'bg-primary text-primary-content'
             ]" :disabled="seat.reserved || (!seat.selected && selectedSeats.length >= totalTickets)">
               {{ seat.label }}
             </button>
