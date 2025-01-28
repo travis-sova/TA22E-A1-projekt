@@ -1,5 +1,6 @@
 <template>
-  <div class="card bg-gradient-to-r from-secondary to-secondary-focus shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 border border-gray-600 rounded-lg overflow-hidden animate-fadeIn">
+  <div
+    class="card bg-gradient-to-r from-secondary to-secondary-focus shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 border border-gray-600 rounded-lg overflow-hidden animate-fadeIn">
     <figure>
       <img :src="event.image" :alt="event.title" class="object-cover w-full h-48" />
     </figure>
@@ -10,7 +11,10 @@
       <p class="text-sm text-primary-content">Time: {{ event.time }}</p>
       <p class="text-sm text-primary-content">Location: {{ event.location }}</p>
       <div class="card-actions justify-end">
-        <button class="btn btn-primary border border-gray-600">Book Tickets</button>
+        <router-link :to="{ name: 'EventTickets', params: { id: event.id } }"
+          class="btn btn-accent text-primary-content">
+          Purchase Tickets
+        </router-link>
       </div>
     </div>
   </div>
