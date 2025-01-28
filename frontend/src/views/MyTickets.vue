@@ -24,8 +24,20 @@
               :disabled="ticketCounts[ticket.type] === 0">−</button>
             <span class="mx-2 text-primary-content">{{ ticketCounts[ticket.type] }}</span>
             <button @click="increaseCount(ticket.type)" class="btn btn-sm btn-accent"
-              :disabled="totalTickets >= movie.seats">+</button>
+              :disabled="totalTickets >= availableSeats || selectedSeats.length >= availableSeats">+</button>
           </div>
+        </div>
+      </div>
+
+      <div class="mt-6 bg-secondary p-4 rounded-lg shadow">
+        <h3 class="text-lg font-bold mb-4 text-primary-content">Choose Your Seats:</h3>
+        <div class="grid grid-cols-10 gap-2">
+          <button v-for="seat in seatLayout" :key="seat.id" @click="toggleSeatSelection(seat.id)" :class="[
+            'w-10 h-10 rounded-lg',
+            seat.reserved ? 'bg-error text-error' : seat.selected ? 'bg-success text-white' : 'bg-neutral text-black'
+          ]" :disabled="seat.reserved || (!seat.selected && selectedSeats.length >= totalTickets)">
+            {{ seat.label }}
+          </button>
         </div>
       </div>
 
@@ -38,12 +50,13 @@
           Back
         </router-link>
 
-        <router-link :to="{ name: 'Purchase', params: { id: movie.id }, query: { total: totalPrice } }"
-          class="btn btn-lg btn-accent" :class="{ 'opacity-50 pointer-events-none': totalTickets === 0 }">
+        <router-link
+          :to="{ name: 'Purchase', params: { id: movie.id }, query: { total: totalPrice, seats: selectedSeats } }"
+          class="btn btn-lg btn-accent"
+          :class="{ 'opacity-50 pointer-events-none': totalTickets === 0 || selectedSeats.length < totalTickets }">
           Purchase Tickets
         </router-link>
       </div>
-
     </div>
   </div>
 </template>
@@ -58,7 +71,6 @@ const movieId = Number(route.params.id);
 const movie = movies.find(m => m.id === movieId);
 if (!movie) throw new Error(`Movie with ID ${movieId} not found`);
 
-
 const ticketCounts = ref({ Adult: 0, Student: 0, Senior: 0, Child: 0 });
 const tickets = [
   { type: 'Adult', label: 'Regular ticket', price: '10.60', description: '' },
@@ -66,7 +78,32 @@ const tickets = [
   { type: 'Senior', label: 'Senior ticket', price: '6.45', description: 'Applicable only with valid ID' },
   { type: 'Child', label: 'Kids ticket', price: '6.45', description: 'Up to 12 years (incl.)' },
 ];
+
 const availableSeats = ref(movie.seats);
+const totalSeats = 100;
+const reservedSeatsCount = computed(() => totalSeats - availableSeats.value);
+const seatLayout = ref([]);
+
+function generateSeatLayout() {
+  const seats = Array.from({ length: totalSeats }, (_, i) => ({
+    id: i + 1,
+    label: `S${i + 1}`,
+    selected: false,
+    reserved: false,
+  }));
+
+  const reservedIndices = new Set();
+  while (reservedIndices.size < reservedSeatsCount.value) {
+    reservedIndices.add(Math.floor(Math.random() * totalSeats));
+  }
+  reservedIndices.forEach(index => {
+    seats[index].reserved = true;
+  });
+
+  return seats;
+}
+
+seatLayout.value = generateSeatLayout();
 
 const totalTickets = computed(() =>
   Object.values(ticketCounts.value).reduce((sum, count) => sum + count, 0)
@@ -79,8 +116,12 @@ const totalPrice = computed(() =>
   ).toFixed(2)
 );
 
+const selectedSeats = computed(() =>
+  seatLayout.value.filter(seat => seat.selected).map(seat => seat.label)
+);
+
 function increaseCount(type) {
-  if (totalTickets.value < movie.seats) {
+  if (totalTickets.value < availableSeats.value) {
     ticketCounts.value[type]++;
   }
 }
@@ -90,17 +131,25 @@ function decreaseCount(type) {
     ticketCounts.value[type]--;
   }
 }
-console.log('Route Params:', route.params);
-console.log('Route Query:', route.query);
+
+function toggleSeatSelection(seatId) {
+  const seat = seatLayout.value.find(s => s.id === seatId);
+  if (seat && !seat.reserved) {
+    seat.selected = !seat.selected;
+  }
+}
 </script>
 
 <style scoped>
-.btn {
-  padding: 8px 12px;
-  border-radius: 6px;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  /* Adjust for a grid of 10 columns */
+  gap: 8px;
 }
 
-.btn-sm {
-  padding: 4px 8px;
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 </style>
