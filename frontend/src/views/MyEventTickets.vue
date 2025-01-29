@@ -51,8 +51,10 @@
           <router-link :to="'/events'" class="btn btn-lg btn-accent">
             Back
           </router-link>
-          <router-link :to="{ name: 'EventPurchase', params: { id: event.id }, query: { total: totalPrice } }"
-            class="btn btn-lg btn-accent" :class="{ 'opacity-50 pointer-events-none': totalTickets === 0 }">
+          <router-link
+            :to="{ name: 'EventPurchase', params: { id: event.id }, query: { total: totalPrice, seats: selectedSeats.join(',') } }"
+            class="btn btn-lg btn-accent"
+            :class="{ 'opacity-50 pointer-events-none': totalTickets === 0 || selectedSeats.length < totalTickets }">
             Purchase Tickets
           </router-link>
         </div>
@@ -148,7 +150,6 @@ function toggleSeatSelection(seatId) {
 .grid {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  /* Adjust for a grid of 10 columns */
   gap: 8px;
 }
 

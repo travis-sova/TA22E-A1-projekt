@@ -52,7 +52,7 @@
         </router-link>
 
         <router-link
-          :to="{ name: 'Purchase', params: { id: movie.id }, query: { total: totalPrice, seats: selectedSeats } }"
+          :to="{ name: 'Purchase', params: { id: movie.id }, query: { total: totalPrice, seats: selectedSeats.join(',') } }"
           class="btn btn-lg btn-accent"
           :class="{ 'opacity-50 pointer-events-none': totalTickets === 0 || selectedSeats.length < totalTickets }">
           Purchase Tickets
