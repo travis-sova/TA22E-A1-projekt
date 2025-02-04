@@ -15,6 +15,7 @@ import MyMovieDetails from '@/views/MyMovieDetails.vue'
 import MyPurchase from '@/views/MyPurchase.vue'
 import MyEventTickets from '@/views/MyEventTickets.vue'
 import MyEventPurchase from '@/views/MyEventPurchase.vue'
+import MyNewsDetails from './views/MyNewsDetails.vue'
 import App from './App.vue'
 
 //import router from './router'
@@ -35,6 +36,7 @@ const router = createRouter({
     { path: '/Movie/:id/purchase', name: 'Purchase', component: MyPurchase, props: true },
     { path: '/Event/tickets/:id', name: 'EventTickets', component: MyEventTickets, props: true },
     { path: '/Event/:id/purchase', name: 'EventPurchase', component: MyEventPurchase, props: true },
+    { path: '/News/:id', name: 'NewsDetails', component: MyNewsDetails, props: true },
   ],
   scrollBehavior() {
     return { top: 0, left: 0 }
