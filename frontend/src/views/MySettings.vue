@@ -82,7 +82,7 @@ function msg(text: string) {
       </div>
 
       <!-- erinevad lahtrid -->
-      <div class="grid grid-cols-2 justify-around text-primary-content">
+      <div class="grid grid-cols-2 justify-around text-primary-content gap-4">
         <!-- emaili lahter -->
         <div>
           <div class="flex flex-row items-center">
