@@ -25,14 +25,10 @@ function updateTitleSort(option: string) {
     <li><a>Coming Soon</a></li>
     <li><a>Showtimes</a></li>
   </ul>
-  <form
-    class="menu menu-vertical lg:menu-horizontal w-full justify-start bg-secondary text-primary\"
-  >
+  <form class="menu menu-vertical lg:menu-horizontal w-full justify-start bg-secondary text-primary\">
     <div class="mx-5">
-      <select
-        id="date"
-        class="bg-primary border border-gray-300 text-primary-content text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-      >
+      <select id="date"
+        class="bg-primary border border-gray-300 text-primary-content text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
         <option selected>Today, 23.11.2024</option>
         <option value="US">Tomorrow, 24.11.2024</option>
         <option value="CA">Monday, 25.11.2024</option>
@@ -42,12 +38,8 @@ function updateTitleSort(option: string) {
     </div>
     <!-- Genre dropdown -->
     <div class="mx-5">
-      <select
-        id="genre-select"
-        v-model="selectedGenre"
-        @change="updateGenre(selectedGenre)"
-        class="bg-primary border border-gray-300 text-primary-content text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-      >
+      <select id="genre-select" v-model="selectedGenre" @change="updateGenre(selectedGenre)"
+        class="bg-primary border border-gray-300 text-primary-content text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
         <option value="All">All Genres</option>
         <option v-for="genre in genres" :key="genre" :value="genre">
           {{ genre }}
@@ -56,24 +48,10 @@ function updateTitleSort(option: string) {
     </div>
     <!-- title sort dropdown -->
     <div class="mx-5">
-      <select
-        id="title-sort-select"
-        v-model="sortTitleOption"
-        @change="updateTitleSort(sortTitleOption)"
-        class="bg-primary border border-gray-300 text-primary-content text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-      >
+      <select id="title-sort-select" v-model="sortTitleOption" @change="updateTitleSort(sortTitleOption)"
+        class="bg-primary border border-gray-300 text-primary-content text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
         <option value="A-Z">A-Z</option>
         <option value="Z-A">Z-A</option>
-      </select>
-    </div>
-
-    <div class="mx-5">
-      <select
-        id="showtime"
-        class="bg-primary border border-gray-300 text-primary-content text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-      >
-        <option selected>Showtime</option>
-        <option value="US">Mida?</option>
       </select>
     </div>
   </form>
@@ -87,6 +65,7 @@ a {
 .select-ghost {
   --tw-bg-opacity: 0;
 }
+
 .select-ghost:focus {
   --tw-bg-opacity: 0;
   --tw-text-opacity: 1;
