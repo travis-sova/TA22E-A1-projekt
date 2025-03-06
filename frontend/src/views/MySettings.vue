@@ -55,8 +55,8 @@ function msg(text: string) {
 <template>
   <div>
     <!-- back -->
-    <div class="mx-auto bg-base-300 w-2/4 px-5 py-5 border border-primary-content rounded-3xl">
-      <h1 class="absolute ml-5 mt-3 text-2xl font-bold text-primary-content">My Settings</h1>
+    <div class="mx-auto bg-base-300 mt-32 w-2/4 px-5 py-5 border border-primary-content rounded-3xl">
+      <h1 class="relative -top-16 -left-20 text-2xl font-bold text-primary-content">My Settings</h1>
       <!-- Mingi profiilikaart -->
       <div class="flex flex-row justify-center h-content pb-5 text-primary-content">
         <div class="flex flex-col items-center">
@@ -82,7 +82,7 @@ function msg(text: string) {
       </div>
 
       <!-- erinevad lahtrid -->
-      <div class="grid grid-cols-2 justify-around text-primary-content gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 justify-around text-primary-content gap-4">
         <!-- emaili lahter -->
         <div>
           <div class="flex flex-row items-center">
@@ -179,17 +179,17 @@ function msg(text: string) {
             </svg>
             <span class="text-lg">My Date of Birth</span>
           </div>
-          <div class="flex flex-row items-center tooltip tooltip-accent hover:outline cursor-pointer"
-            data-tip="Contact support to change DOB">
-            <input type="text" value="01/01/2000" disabled class="input input-bordered w-full max-w-xs bg-base-200" />
+          <div class="flex flex-row items-center tooltip tooltip-accent" data-tip="Contact support to change DOB">
+            <input type="text" value="01/01/2000" disabled
+              class="input input-bordered w-full max-w-xs bg-base-200 hover:outline cursor-pointer ml-auto" />
           </div>
         </div>
       </div>
 
       <div class="mt-5">
-        <div class="grid grid-cols-8 justify-center">
+        <div class="grid grid-cols-1 md:grid-cols-8 justify-center">
           <!-- uudiskirjaga liitumine -->
-          <div class="col-start-1 col-end-3">
+          <div class="md:col-start-1 md:col-end-4">
             <div class="form-control">
               <label class="label cursor-pointer">
                 <input type="checkbox" class="toggle toggle-success" checked />
@@ -198,7 +198,7 @@ function msg(text: string) {
             </div>
           </div>
           <!-- konto kustutamine -->
-          <div class="col-start-5">
+          <div class="md:col-start-5 md:col-end-9">
             <button class="btn btn-error" @click="msg('Midagi pole kustutada vennas')">Delete account</button>
           </div>
         </div>
