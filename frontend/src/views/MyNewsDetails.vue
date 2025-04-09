@@ -30,31 +30,31 @@ export default {
         <img :src="article.BigPicture" alt="News Image" class="w-full rounded-lg shadow-lg" />
       </figure>
 
-      <h1 class="text-4xl font-bold mb-2">{{ article.title }}</h1>
+      <h1 class="text-4xl font-bold mb-2">{{ $t(article.title) }}</h1>
       <p class=" text-sm mb-6">
         {{ new Date(article.date).toLocaleDateString() }}
       </p>
 
       <p class="text-lg leading-relaxed mb-4">
-        {{ article.description }}
+        {{ $t(article.description) }}
       </p>
 
       <div class="divider"></div>
 
       <div class="prose prose-lg max-w-none">
-        <h2 class="text-2xl font-semibold">More About This Event</h2>
-        <p>{{ article.extendedDescription }}</p>
+        <h2 class="text-2xl font-semibold">{{ $t('news.extended') }}</h2>
+        <p>{{ $t(article.extendedDescription) }}</p>
       </div>
 
       <div class="mt-8">
         <router-link to="/News" class="btn btn-accent text-primary-content">
-          Back to News
+          {{ $t('news.back') }}
         </router-link>
       </div>
     </div>
 
     <div v-else>
-      <p class="text-center text-xl">Loading...</p>
+      <p class="text-center text-xl">{{ $t('news.loading') }}</p>
     </div>
   </div>
 </template>

@@ -40,9 +40,9 @@ function updateTitleSort(option: string) {
     <div class="mx-5">
       <select id="genre-select" v-model="selectedGenre" @change="updateGenre(selectedGenre)"
         class="bg-primary border border-gray-300 text-primary-content text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-        <option value="All">All Genres</option>
+        <option value="All">{{ $t('shows.genres.all') }}</option>
         <option v-for="genre in genres" :key="genre" :value="genre">
-          {{ genre }}
+          {{ $t('shows.genres.' + genre) }}
         </option>
       </select>
     </div>

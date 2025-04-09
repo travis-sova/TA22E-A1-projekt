@@ -1,7 +1,8 @@
-import './styles/main.css'
+import '@/styles/main.css'
 import { createRouter, createWebHistory } from 'vue-router'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import { createI18n } from 'vue-i18n'
 
 import MyHome from '@/views/MyHome.vue'
 import MyNews from '@/views/MyNews.vue'
@@ -15,10 +16,25 @@ import MyMovieDetails from '@/views/MyMovieDetails.vue'
 import MyPurchase from '@/views/MyPurchase.vue'
 import MyEventTickets from '@/views/MyEventTickets.vue'
 import MyEventPurchase from '@/views/MyEventPurchase.vue'
-import MyNewsDetails from './views/MyNewsDetails.vue'
-import App from './App.vue'
+import MyNewsDetails from '@/views/MyNewsDetails.vue'
+import App from '@/App.vue'
+
+import en from '@/locales/en.json'
+import ee from '@/locales/ee.json'
+import de from '@/locales/de.json'
 
 //import router from './router'
+
+const i18n = createI18n({
+  legacy: false,
+  locale: 'ee',
+  fallbackLocale: 'en',
+  messages: {
+    en,
+    ee,
+    de
+  }
+})
 
 const app = createApp(App)
 const router = createRouter({
@@ -47,4 +63,5 @@ app
   .use(createPinia())
   //app.use(router)
   .use(router)
+  .use(i18n)
 app.mount('#app')

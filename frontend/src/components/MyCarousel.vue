@@ -16,7 +16,7 @@ const startInterval = () => {
 
 const nextSlide = () => {
   currentSlide.value = (currentSlide.value + 1) % slides.length
-  const temp = slides.shift()
+  const temp = slides.shift() || ''
   slides.push(temp)
   currentSlide.value = 1
   startInterval() // Reset interval when manually triggered
@@ -24,7 +24,7 @@ const nextSlide = () => {
 
 const prevSlide = () => {
   currentSlide.value = (currentSlide.value - 1 + slides.length) % slides.length
-  const temp = slides.pop()
+  const temp = slides.pop() || ''
   slides.unshift(temp)
   currentSlide.value = 1
   startInterval() // Reset interval when manually triggered
@@ -42,15 +42,10 @@ onUnmounted(() => {
 <template>
   <div class="flex justify-center items-center h-full overflow-hidden">
     <div class="carousel-container relative w-3/4 h-full">
-      <div
-        class="flex transition-transform duration-500 ease-in-out"
-        :style="{ transform: `translateX(-${currentSlide * 100}%)` }"
-      >
-        <div
-          v-for="(slide, index) in slides"
-          :key="index"
-          :class="['w-full flex-shrink-0', { blurred: Math.abs(currentSlide - index) === 1 }]"
-        >
+      <div class="flex transition-transform duration-500 ease-in-out"
+        :style="{ transform: `translateX(-${currentSlide * 100}%)` }">
+        <div v-for="(slide, index) in slides" :key="index"
+          :class="['w-full flex-shrink-0', { blurred: Math.abs(currentSlide - index) === 1 }]">
           <img :src="slide" class="w-full h-full object-cover" />
         </div>
       </div>

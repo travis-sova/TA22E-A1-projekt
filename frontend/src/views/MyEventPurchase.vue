@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1>Purchase Tickets</h1>
-    <p>Event: {{ event.title }}</p>
-    <p>Total Price: {{ total }} €</p>
-    <p>Seats: {{ selectedSeats.join(', ') }} </p>
+    <h1>{{ $t('events.purchase') }}</h1>
+    <p>{{ $t('events.event') }} {{ $t(event.title) }}</p>
+    <p>{{ $t('events.total') }} {{ total }} €</p>
+    <p>{{ $t('events.seat') }} {{ selectedSeats.join(', ') }} </p>
   </div>
 </template>
 
