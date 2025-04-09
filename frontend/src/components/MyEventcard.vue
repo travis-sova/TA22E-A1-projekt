@@ -5,15 +5,15 @@
       <img :src="event.image" :alt="event.title" class="object-cover w-full h-48" />
     </figure>
     <div class="card-body">
-      <h2 class="card-title text-lg text-primary-content">{{ event.title }}</h2>
-      <p class="text-primary-content">{{ event.description }}</p>
-      <p class="text-sm text-primary-content">Date: {{ event.date }}</p>
-      <p class="text-sm text-primary-content">Time: {{ event.time }}</p>
-      <p class="text-sm text-primary-content">Location: {{ event.location }}</p>
+      <h2 class="card-title text-lg text-primary-content">{{ $t(event.title) }}</h2>
+      <p class="text-primary-content">{{ $t(event.description) }}</p>
+      <p class="text-sm text-primary-content">{{ $t('events.date') }} {{ $t(event.date) }}</p>
+      <p class="text-sm text-primary-content">{{ $t('events.time') }} {{ $t(event.time) }}</p>
+      <p class="text-sm text-primary-content">{{ $t('events.location') }} {{ $t(event.location) }}</p>
       <div class="card-actions justify-end">
         <router-link :to="{ name: 'EventTickets', params: { id: event.id } }"
           class="btn btn-accent text-primary-content">
-          Purchase Tickets
+          {{ $t('events.purchase') }}
         </router-link>
       </div>
     </div>
