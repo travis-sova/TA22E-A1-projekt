@@ -27,16 +27,10 @@ updates:
         dependency-type: "production"
         update-types:
           - "major"
-        labels:
-          - "BREAKING"
-          - "dependencies"
       breaking-dev-dependencies:
         dependency-type: "development"
         update-types:
           - "major"
-        labels:
-          - "BREAKING"
-          - "dependencies"
           
   # Security updates have both development and production dependencies
   # They are also checked DAILY
@@ -60,8 +54,6 @@ updates:
         applies-to: "security-updates"
         update-types:
           - "major"
-        labels:
-          - "BREAKING"
       
   # BACKEND
   - package-ecosystem: "npm"
@@ -87,16 +79,10 @@ updates:
         dependency-type: "production"
         update-types:
           - "major"
-        labels:
-          - "BREAKING"
-          - "dependencies"
       breaking-dev-dependencies:
         dependency-type: "development"
         update-types:
           - "major"
-        labels:
-          - "BREAKING"
-          - "dependencies"
           
   # Security updates have both development and production dependencies
   # They are also checked DAILY
@@ -120,5 +106,3 @@ updates:
         applies-to: "security-updates"
         update-types:
           - "major"
-        labels:
-          - "BREAKING"
