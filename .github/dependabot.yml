@@ -1,0 +1,124 @@
+# Please see the documentation for all configuration options:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  # FRONTEND
+  - package-ecosystem: "npm"
+    directory: "/frontend" # Location of package manifests
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "02:00"
+      timezone: "Europe/Tallinn"
+    groups:
+      prod-dependencies:
+        dependency-type: "production"
+        update-types:
+          - "patch"
+          - "minor"
+      dev-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "patch"
+          - "minor"
+      # Breaking changes in different groups
+      breaking-prod-dependencies:
+        dependency-type: "production"
+        update-types:
+          - "major"
+        labels:
+          - "BREAKING"
+          - "dependencies"
+      breaking-dev-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "major"
+        labels:
+          - "BREAKING"
+          - "dependencies"
+          
+  # Security updates have both development and production dependencies
+  # They are also checked DAILY
+  - package-ecosystem: "npm"
+    directory: "/frontend" # Location of package manifests
+    schedule:
+      interval: "daily"
+      time: "02:00"
+      timezone: "Europe/Tallinn"
+    labels:
+          - "SECURITY"
+          - "FRONTEND"
+    groups:
+      security-updates:
+        applies-to: "security-updates"
+        update-types:
+          - "patch"
+          - "minor"
+      # Breaking changes
+      breaking-security-updates:
+        applies-to: "security-updates"
+        update-types:
+          - "major"
+        labels:
+          - "BREAKING"
+      
+  # BACKEND
+  - package-ecosystem: "npm"
+    directory: "/backend" # Location of package manifests
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "02:00"
+      timezone: "Europe/Tallinn"
+    groups:
+      prod-dependencies:
+        dependency-type: "production"
+        update-types:
+          - "patch"
+          - "minor"
+      dev-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "patch"
+          - "minor"
+      # Breaking changes in different groups
+      breaking-prod-dependencies:
+        dependency-type: "production"
+        update-types:
+          - "major"
+        labels:
+          - "BREAKING"
+          - "dependencies"
+      breaking-dev-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "major"
+        labels:
+          - "BREAKING"
+          - "dependencies"
+          
+  # Security updates have both development and production dependencies
+  # They are also checked DAILY
+  - package-ecosystem: "npm"
+    directory: "/backend" # Location of package manifests
+    schedule:
+      interval: "daily"
+      time: "02:00"
+      timezone: "Europe/Tallinn"
+    labels:
+          - "SECURITY"
+          - "BACKEND"
+    groups:
+      security-updates:
+        applies-to: "security-updates"
+        update-types:
+          - "patch"
+          - "minor"
+      # Breaking changes
+      breaking-security-updates:
+        applies-to: "security-updates"
+        update-types:
+          - "major"
+        labels:
+          - "BREAKING"
