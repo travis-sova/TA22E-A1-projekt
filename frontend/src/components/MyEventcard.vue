@@ -1,6 +1,6 @@
 <template>
   <div
-    class="card bg-gradient-to-r from-secondary to-secondary-focus shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 border border-gray-600 rounded-lg overflow-hidden animate-fadeIn">
+    class="card bg-linear-to-r from-secondary to-secondary-focus shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 border border-gray-600 rounded-lg overflow-hidden animate-fadeIn">
     <figure>
       <img :src="event.image" :alt="event.title" class="object-cover w-full h-48" />
     </figure>

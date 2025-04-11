@@ -85,7 +85,7 @@ function updateSeats() {
               <circle cx="25" cy="25" r="20" />
             </svg>
           </div>
-          <div class="flex-grow content-container">
+          <div class="grow content-container">
             <p>{{ $t('card.seats') }}</p>
             <p>{{ movie.seats }}</p>
           </div>
@@ -144,18 +144,18 @@ img {
 }
 
 .svg-container {
-  flex-shrink: 0;
+  shrink: 0;
 }
 
 .content-container {
-  flex-grow: 1;
+  grow: 1;
   align-self: flex-end;
 }
 
 .card-body {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  grow: 1;
   overflow: hidden;
 }
 

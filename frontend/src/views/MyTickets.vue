@@ -4,14 +4,14 @@
       <h2 class="text-3xl font-bold mb-4">{{ movie.name }}</h2>
       <p class="text-lg text-primary-content mb-6">{{ movie.description }}</p>
 
-      <div class="stats shadow bg-secondary text-primary-content rounded-lg p-4 mb-4">
+      <div class="stats shadow-sm bg-secondary text-primary-content rounded-lg p-4 mb-4">
         <div class="stat">
           <div class="stat-title text-primary-content">{{ $t('ticket.available') }}</div>
           <div class="stat-value text-primary-content">{{ availableSeats }}</div>
         </div>
       </div>
 
-      <div class="bg-secondary p-4 rounded-lg shadow">
+      <div class="bg-secondary p-4 rounded-lg shadow-sm">
         <div v-for="ticket in tickets" :key="ticket.type"
           class="flex justify-between items-center py-3 border-b-2 border-primary">
           <div>

@@ -28,7 +28,7 @@ if (!movie) {
             {{ movie.description }}
           </p>
           <div class="flex justify-between items-center mt-6">
-            <div class="stats shadow bg-secondary text-primary-content rounded-lg">
+            <div class="stats shadow-sm bg-secondary text-primary-content rounded-lg">
               <div class="stat">
                 <div class="stat-title text-primary-content">{{ $t('movie.seats') }}</div>
                 <div class="stat-value text-primary-content">{{ movie.seats }}</div>

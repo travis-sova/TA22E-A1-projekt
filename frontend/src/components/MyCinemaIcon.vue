@@ -7,7 +7,7 @@
       height: `${baseSize * iconScale}px`,
       fontSize: `${baseFontSize * iconScale}px`,
     }"
-    class="cinema-icon absolute bg-red-500 hover:bg-red-700 rounded-full focus:outline-none focus:ring-4 focus:ring-blue-300 transform hover:scale-125 animate-fadeIn flex items-center justify-center"
+    class="cinema-icon absolute bg-red-500 hover:bg-red-700 rounded-full focus:outline-hidden focus:ring-4 focus:ring-blue-300 transform hover:scale-125 animate-fadeIn flex items-center justify-center"
     @click="$emit('selectCinema', cinema)"
   >
     🎥

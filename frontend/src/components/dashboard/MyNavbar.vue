@@ -23,20 +23,20 @@ function showAlert() {
 
 <template>
   <div class="navbar bg-primary text-primary-content">
-    <router-link class="flex flex-shrink-0 items-center mr-4" to="/">
+    <router-link class="flex shrink-0 items-center mr-4" to="/">
       <img class="w-auto h-10" :src="logo" alt="Logo" />
       <span class="hidden xl:block text-2xl font-bold ml-2">{{ $t('welcome') }}</span>
     </router-link>
 
-    <div class="flex flex-grow">
-      <div class="join join-vertical lg:join-horizontal flex-grow flex">
-        <router-link to="/Movies" class="btn btn-ghost no-animation join-item flex-grow">{{ $t('nav.movies')
+    <div class="flex grow">
+      <div class="join join-vertical lg:join-horizontal grow flex">
+        <router-link to="/Movies" class="btn btn-ghost no-animation join-item grow">{{ $t('nav.movies')
         }}</router-link>
-        <router-link to="/Cinemas" class="btn btn-ghost no-animation join-item flex-grow">{{ $t('nav.cinemas')
+        <router-link to="/Cinemas" class="btn btn-ghost no-animation join-item grow">{{ $t('nav.cinemas')
         }}</router-link>
-        <router-link to="/Events" class="btn btn-ghost no-animation join-item flex-grow">{{ $t('nav.events')
+        <router-link to="/Events" class="btn btn-ghost no-animation join-item grow">{{ $t('nav.events')
         }}</router-link>
-        <router-link to="/News" class="btn btn-ghost no-animation join-item flex-grow">{{ $t('nav.news')
+        <router-link to="/News" class="btn btn-ghost no-animation join-item grow">{{ $t('nav.news')
         }}</router-link>
       </div>
     </div>
@@ -58,14 +58,14 @@ function showAlert() {
             </svg>
           </div>
         </div>
-        <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+        <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow-sm">
           <li><router-link to="/Settings">{{ $t('nav.settings') }}</router-link></li>
           <li><a @click.prevent="showAlert">{{ $t('nav.logout') }}</a></li>
         </ul>
       </div>
       <label class="swap swap-rotate">
         <!-- this hidden checkbox controls the state -->
-        <input type="checkbox" class="theme-controller" value="darky" />
+        <input type="checkbox" class="theme-controller" value="dark" />
 
         <!-- sun icon -->
         <svg class="swap-off h-10 w-10 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -85,7 +85,7 @@ function showAlert() {
             <img alt="current locale" :src="currentFlag" />
           </div>
         </div>
-        <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-20 p-1 shadow">
+        <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-20 p-1 shadow-sm">
           <li @click="changeLocale('en', en)" class=""><img alt="English" :src="en" class="w-20 h-auto" />
           </li>
           <li @click="changeLocale('ee', ee)"><img alt="Eesti" :src="ee" class="w-20 h-auto" /></li>
