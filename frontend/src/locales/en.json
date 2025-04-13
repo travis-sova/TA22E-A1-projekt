@@ -8,6 +8,8 @@
     "news": "News",
     "settings": "Settings",
     "logout": "Logout",
+    "login": "Login",
+    "admin": "Admin",
     "search": "Search",
     "implemented": "Not implemented yet"
   },
@@ -172,5 +174,43 @@
     "found": "Page not found",
     "sorry": "Sorry, we couldn’t find the page you’re looking for.",
     "back:": "Go back Home"
+  },
+  "Login": {
+    "title": "Login to the Spinning rat's cinema",
+    "login": "Login",
+    "username": "Username",
+    "password": "Password",
+    "forgot": "forgot the password?",
+    "account": "Don’t have an account yet?",
+    "register": "Register"
+  },
+  "Register": {
+    "title": "Register to the Spinning rat's cinema",
+    "register": "Register",
+    "username": "Username",
+    "email": "Email",
+    "firstName": "first Name",
+    "lastName": "last Name",
+    "password": "Password",
+    "confirmPassword": "repeat password",
+    "gender": "gender",
+    "dob": "Date of Birth",
+    "registerBtn": "Register",
+    "login": "Already have an account?",
+    "loginBtn": "Login",
+    "number": "Phone number",
+    "requirements": "3-20 characters, letters, numbers and underscores only",
+    "weak": "Weak",
+    "medium": "medium",
+    "strong": "strong",
+    "req1": "At least 8 characters",
+    "req2": "1 uppercase letter",
+    "req3": "1 lowercase letter",
+    "req4": "1 number",
+    "noGender": "Prefer not to say",
+    "gen1": "Male",
+    "gen2": "Female",
+    "gen3": "Other",
+    "gen4": "Attack Helicopter"
   }
 }
