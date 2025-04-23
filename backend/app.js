@@ -21,7 +21,18 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something broke!");
 });
 
+let date_time = new Date();
+
+// get current hours
+let hours = date_time.getHours();
+
+// get current minutes
+let minutes = date_time.getMinutes();
+
+// get current seconds
+let seconds = date_time.getSeconds();
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(hours + ":" + minutes + ":" + seconds + ` Server running on port ${PORT}`);
 });
