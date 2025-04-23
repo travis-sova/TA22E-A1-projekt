@@ -23,7 +23,7 @@ router.post("/register", validateRegisterInput, async (req, res) => {
     const { username, password, email, number, fname, sname, dob, sex } =
       req.body;
 
-    const [existingUsers] = await db.query(
+    const [existingUsers] = await db.execute(
       "SELECT id FROM user WHERE username = ? OR email = ?",
       [username, email]
     );
@@ -36,7 +36,7 @@ router.post("/register", validateRegisterInput, async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const [result] = await db.query(
+    const [result] = await db.execute(
       "INSERT INTO user (username, password, email, number, fname, sname, dob, sex, perms) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)",
       [username, hashedPassword, email, number, fname, sname, dob, sex]
     );
@@ -75,7 +75,7 @@ router.post("/login", validateLoginInput, async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    const [users] = await db.query("SELECT * FROM user WHERE username = ?", [
+    const [users] = await db.execute("SELECT * FROM user WHERE username = ?", [
       username,
     ]);
 

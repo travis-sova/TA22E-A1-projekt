@@ -7,11 +7,11 @@ const { authenticate, isAdmin } = require("../middleware/auth");
 // Admin dashboard stats
 router.get("/stats", authenticate, isAdmin, async (req, res) => {
   try {
-    const [moviesCount] = await db.query(
+    const [moviesCount] = await db.execute(
       "SELECT COUNT(*) as count FROM movies"
     );
-    const [showsCount] = await db.query("SELECT COUNT(*) as count FROM shows");
-    const [usersCount] = await db.query("SELECT COUNT(*) as count FROM user");
+    const [showsCount] = await db.execute("SELECT COUNT(*) as count FROM shows");
+    const [usersCount] = await db.execute("SELECT COUNT(*) as count FROM user");
 
     res.json({
       movies: moviesCount[0].count,
@@ -27,7 +27,7 @@ router.get("/stats", authenticate, isAdmin, async (req, res) => {
 router.post("/movies", authenticate, isAdmin, async (req, res) => {
   try {
     const { img, name, genre, description, rating } = req.body;
-    const [result] = await db.query(
+    const [result] = await db.execute(
       "INSERT INTO movies (img, name, genre, description, rating) VALUES (?, ?, ?, ?, ?)",
       [img, name, genre, description, rating]
     );
@@ -41,7 +41,7 @@ router.post("/movies", authenticate, isAdmin, async (req, res) => {
 router.post("/shows", authenticate, isAdmin, async (req, res) => {
   try {
     const { movieId, cinemaId, date, time, seats } = req.body;
-    const [result] = await db.query(
+    const [result] = await db.execute(
       "INSERT INTO shows (movie, cinema, date, time, seats) VALUES (?, ?, ?, ?, ?)",
       [movieId, cinemaId, date, time, seats]
     );
@@ -54,7 +54,7 @@ router.post("/shows", authenticate, isAdmin, async (req, res) => {
 // Get all users (admin only)
 router.get("/users", authenticate, isAdmin, async (req, res) => {
   try {
-    const [users] = await db.query(
+    const [users] = await db.execute(
       "SELECT id, username, email, perms FROM user"
     );
     res.json(users);
@@ -75,7 +75,7 @@ router.patch(
         return res.status(400).json({ error: "Invalid permission level" });
       }
 
-      await db.query("UPDATE user SET perms = ? WHERE id = ?", [
+      await db.execute("UPDATE user SET perms = ? WHERE id = ?", [
         perms,
         req.params.id,
       ]);
@@ -90,7 +90,7 @@ router.patch(
 router.delete("/users/:id", authenticate, isAdmin, async (req, res) => {
   try {
     const { id } = req.params;
-    await db.query("DELETE FROM user WHERE id = ?", [id]);
+    await db.execute("DELETE FROM user WHERE id = ?", [id]);
     res.json({ success: true, message: "User deleted successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -101,7 +101,7 @@ router.delete("/users/:id", authenticate, isAdmin, async (req, res) => {
 router.delete("/movies/:id", authenticate, isAdmin, async (req, res) => {
   try {
     const { id } = req.params;
-    await db.query("DELETE FROM movies WHERE id = ?", [id]);
+    await db.execute("DELETE FROM movies WHERE id = ?", [id]);
     res.json({ success: true, message: "Movie deleted successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -112,7 +112,7 @@ router.delete("/movies/:id", authenticate, isAdmin, async (req, res) => {
 router.delete("/shows/:id", authenticate, isAdmin, async (req, res) => {
   try {
     const { id } = req.params;
-    await db.query("DELETE FROM shows WHERE id = ?", [id]);
+    await db.execute("DELETE FROM shows WHERE id = ?", [id]);
     res.json({ success: true, message: "Show deleted successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });

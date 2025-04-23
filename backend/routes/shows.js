@@ -5,7 +5,7 @@ const db = require("../db");
 // Get shows for a specific movie
 router.get("/movie/:movieId", async (req, res) => {
   try {
-    const [shows] = await db.query(
+    const [shows] = await db.execute(
       `
             SELECT s.*, c.name as cinema_name
             FROM shows s

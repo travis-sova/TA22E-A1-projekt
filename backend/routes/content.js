@@ -4,7 +4,7 @@ const db = require("../db");
 
 router.get("/movies", async (req, res) => {
   try {
-    const [movies] = await db.query("SELECT * FROM movies");
+    const [movies] = await db.execute("SELECT * FROM movies");
     res.json(movies);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -13,7 +13,7 @@ router.get("/movies", async (req, res) => {
 
 router.get("/shows", async (req, res) => {
   try {
-    const [shows] = await db.query(`
+    const [shows] = await db.execute(`
       SELECT s.*, m.name as movie_name, m.img as movie_img, c.name as cinema_name 
       FROM shows s
       JOIN movies m ON s.movie = m.id
@@ -27,7 +27,7 @@ router.get("/shows", async (req, res) => {
 
 router.get("/cinemas", async (req, res) => {
   try {
-    const [cinemas] = await db.query("SELECT * FROM cinema");
+    const [cinemas] = await db.execute("SELECT * FROM cinema");
     res.json(cinemas);
   } catch (err) {
     res.status(500).json({ error: err.message });

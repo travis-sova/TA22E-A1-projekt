@@ -3,7 +3,7 @@ const db = require("../db");
 class User {
   static async isAdmin(userId) {
     try {
-      const [users] = await db.query("SELECT perms FROM user WHERE id = ?", [
+      const [users] = await db.execute("SELECT perms FROM user WHERE id = ?", [
         userId,
       ]);
 

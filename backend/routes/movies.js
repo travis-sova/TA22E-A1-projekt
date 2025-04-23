@@ -5,7 +5,7 @@ const db = require("../db");
 // Get movie by ID
 router.get("/:id", async (req, res) => {
   try {
-    const [movie] = await db.query("SELECT * FROM movies WHERE id = ?", [
+    const [movie] = await db.execute("SELECT * FROM movies WHERE id = ?", [
       req.params.id,
     ]);
     if (movie.length === 0) {
