@@ -118,7 +118,9 @@
     "seats": "Vabu Kohti",
     "rating": "Hinnang",
     "back": "Tagasi",
-    "purchase": "Osta Piletid"
+    "purchase": "Osta Pileteid",
+    "showtimes": "Seansid",
+    "no": "Seansse ei ole"
   },
   "news": {
     "latest": "Viimased Uudised",

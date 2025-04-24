@@ -118,7 +118,9 @@
     "seats": "Available seats",
     "rating": "Rating",
     "back": "Back",
-    "purchase": "Purchase Tickets"
+    "purchase": "Purchase Tickets",
+    "showtimes": "showtimes",
+    "no": "No showtimes available"
   },
   "news": {
     "latest": "Latest News",
