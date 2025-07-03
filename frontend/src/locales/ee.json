@@ -7,6 +7,8 @@
     "events": "Üritused",
     "news": "Uudised",
     "settings": "Seaded",
+    "login": "Logi sisse",
+    "admin": "Admin",
     "logout": "Logi välja",
     "search": "Otsi",
     "implemented": "Pole implementeeritud veel"
@@ -116,7 +118,9 @@
     "seats": "Vabu Kohti",
     "rating": "Hinnang",
     "back": "Tagasi",
-    "purchase": "Osta Piletid"
+    "purchase": "Osta Pileteid",
+    "showtimes": "Seansid",
+    "no": "Seansse ei ole"
   },
   "news": {
     "latest": "Viimased Uudised",
@@ -172,5 +176,44 @@
     "found": "Lehte ei leitud",
     "sorry": "Vabandame, me ei leidnud lehte, mida otsite.",
     "back": "Mine tagasi Kodulehele"
+  },
+  "Login": {
+    "title": "Logi sisse Keerleva Roti Kinno",
+    "login": "Logi sisse",
+    "username": "Kasutajanimi",
+    "password": "Parool",
+    "forgot": "Unustasid parooli?",
+    "account": "Kas sul pole veel kontot?",
+    "register": "Registreeri",
+    "loginBtn": "Logi sisse"
+  },
+  "Register": {
+    "title": "Registreeri Keerleva Roti Kinno",
+    "register": "Registreeri",
+    "username": "Kasutajanimi",
+    "email": "E-mail",
+    "firstName": "Eesnimi",
+    "lastName": "Perekonnanimi",
+    "password": "Parool",
+    "confirmPassword": "Korda parooli",
+    "gender": "sugu",
+    "dob": "Sünnikuupäev",
+    "registerBtn": "Registreeri",
+    "login": "Juba registreeritud?",
+    "loginBtn": "Logi sisse",
+    "number": "telefoninumber",
+    "requirements": "Ainult 3–20 tähemärki, tähti, numbreid ja allkriipse",
+    "weak": "Nõrk",
+    "medium": "Keskmine",
+    "strong": "Tugev",
+    "req1": "Peab olema vähemalt 8 tähemärki",
+    "req2": "Peab olema vähemalt 1 suur täht",
+    "req3": "Peab olema vähemalt 1 väike täht",
+    "req4": "Peab olema vähemalt 1 number",
+    "noGender": "Eelistan mitte öelda",
+    "gen1": "Mees",
+    "gen2": "Naine",
+    "gen3": "Muu",
+    "gen4": "Rünnakuhelikopter"
   }
 }
