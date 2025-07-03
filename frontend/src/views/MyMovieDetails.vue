@@ -132,7 +132,7 @@ onMounted(() => {
               <span class="text-xs text-gray-500">{{ show.seats }} {{ $t('card.seats') }}</span>
             </div>
             <!-- params tuleb muuta show.id-le kui ticketid on reaalset iga showga ühendatud -->
-            <router-link :to="{ name: 'Tickets', params: { id: show.movie } }" class="btn btn-sm btn-primary">
+            <router-link :to="{ name: 'Tickets', params: { id: show.id } }" class="btn btn-sm btn-primary">
               {{ $t('movie.purchase') }}
             </router-link>
           </div>

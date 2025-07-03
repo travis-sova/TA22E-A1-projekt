@@ -1,8 +1,17 @@
 <template>
-  <div class="container mx-auto p-6">
+  <div v-if="isLoading" class="flex flex-col items-center justify-center p-8 text-gray-500">
+    <div class="w-10 h-10 border-4 border-gray-200 border-l-blue-600 rounded-full animate-spin mb-4"></div>
+    <p>Loading movies...</p>
+  </div>
+
+  <div v-if="error" class="p-8 bg-red-50 text-red-600 rounded-lg text-center max-w-2xl mx-auto my-8 font-medium">
+    {{ error }}
+  </div>
+
+  <div v-if="show" class="container mx-auto p-6">
     <div class="card shadow-xl bg-primary text-primary-content rounded-lg p-6">
-      <h2 class="text-3xl font-bold mb-4">{{ movie.name }}</h2>
-      <p class="text-lg text-primary-content mb-6">{{ movie.description }}</p>
+      <h2 class="text-3xl font-bold mb-4">{{ show.movie_name }}</h2>
+      <p class="text-lg text-primary-content mb-6">{{ show.description }}</p>
 
       <div class="stats shadow bg-secondary text-primary-content rounded-lg p-4 mb-4">
         <div class="stat">
@@ -48,12 +57,12 @@
       </div>
 
       <div class="mt-6 flex justify-center gap-4">
-        <router-link :to="`/movies/${movie.id}`" class="btn btn-lg btn-accent">
+        <router-link :to="`/movies/${show.id}`" class="btn btn-lg btn-accent">
           {{ $t('ticket.back') }}
         </router-link>
 
         <router-link
-          :to="{ name: 'Purchase', params: { id: movie.id }, query: { total: totalPrice, seats: selectedSeats.join(',') } }"
+          :to="{ name: 'Purchase', params: { id: show.id }, query: { total: totalPrice, seats: selectedSeats.join(',') } }"
           class="btn btn-lg btn-accent"
           :class="{ 'opacity-50 pointer-events-none': totalTickets === 0 || selectedSeats.length < totalTickets }">
           {{ $t('ticket.purchase') }}
@@ -63,15 +72,60 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed } from 'vue';
+<script setup lang="ts">
+import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import movies from '../../data/movies.js';
+import axios from 'axios';
+
+interface Show {
+  id: number;
+  movie: number;
+  movie_name: string
+  cinema: number;
+  date: string;
+  time: string;
+  seats: number;
+  cinema_name: string;
+  description: string;
+}
+
+interface Seat {
+  id: number;
+  label: string;
+  selected: boolean;
+  reserved: boolean;
+}
+
+const show = ref<Show | null>(null);
+const isLoading = ref(false);
+const error = ref<string | null>(null);
 
 const route = useRoute();
-const movieId = Number(route.params.id);
-const movie = movies.find(m => m.id === movieId);
-if (!movie) throw new Error(`Movie with ID ${movieId} not found`);
+const showId = Number(route.params.id);
+
+const fetchData = async () => {
+  isLoading.value = true;
+  error.value = null;
+
+  try {
+    const [showRes] = await Promise.all([
+      axios.get<Show>(`http://localhost:3000/api/shows/show/` + showId),
+    ]);
+
+    show.value = showRes.data;
+
+    seatLayout.value = generateSeatLayout();
+  } catch (err) {
+    error.value = axios.isAxiosError(err)
+      ? err.response?.data?.error || err.message
+      : 'Failed to fetch data';
+    console.error('Error fetching data:', err);
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+fetchData();
 
 const ticketCounts = ref({ Adult: 0, Student: 0, Senior: 0, Child: 0 });
 const tickets = [
@@ -81,10 +135,10 @@ const tickets = [
   { type: 'Child', label: 'ticket.child.label', price: '6.45', description: 'ticket.child.description' },
 ];
 
-const availableSeats = ref(movie.seats);
+const availableSeats = computed(() => show.value?.seats || 0);
 const totalSeats = 100;
 const reservedSeatsCount = computed(() => totalSeats - availableSeats.value);
-const seatLayout = ref([]);
+const seatLayout = ref<Seat[]>([]);
 
 function generateSeatLayout() {
   const seats = Array.from({ length: totalSeats }, (_, i) => ({
@@ -104,8 +158,6 @@ function generateSeatLayout() {
 
   return seats;
 }
-
-seatLayout.value = generateSeatLayout();
 
 const totalTickets = computed(() =>
   Object.values(ticketCounts.value).reduce((sum, count) => sum + count, 0)
@@ -140,6 +192,9 @@ function toggleSeatSelection(seatId) {
     seat.selected = !seat.selected;
   }
 }
+
+onMounted(() => {
+});
 </script>
 
 <style scoped>

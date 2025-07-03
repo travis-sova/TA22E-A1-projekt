@@ -20,4 +20,22 @@ router.get("/movie/:movieId", async (req, res) => {
   }
 });
 
+router.get("/show/:showId", async (req, res) => {
+  try {
+    const [show] = await db.execute(
+      `
+            SELECT s.*, c.name as cinema_name, m.name as movie_name, m.description as description
+            FROM shows s
+            JOIN cinema c ON s.cinema = c.id
+            JOIN movies m ON s.movie = m.id
+            WHERE s.id = ?
+        `,
+      [req.params.showId]
+    );
+    res.json(show[0] || null);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
