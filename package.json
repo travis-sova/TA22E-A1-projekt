@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"all": "cd frontend && npm install && cd .. && cd backend && npm install",
+		"all": "npm install && cd frontend && npm install && cd .. && cd backend && npm install",
 		"start": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\""
 	},
 	"repository": {
