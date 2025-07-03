@@ -4,21 +4,20 @@ import ee from '@/assets/flags/ee.svg'
 import en from '@/assets/flags/en.svg'
 import de from '@/assets/flags/de.svg'
 import { RouterLink } from 'vue-router'
+import { useAuthStore } from '@/stores/auth';
 
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n';
 const { locale, t } = useI18n();
 
 const currentFlag = ref(ee)
+const authStore = useAuthStore();
 
 function changeLocale(str: string, img: string) {
   locale.value = str
   currentFlag.value = img
 }
 
-function showAlert() {
-  alert(t('nav.implemented'))
-}
 </script>
 
 <template>
@@ -59,8 +58,10 @@ function showAlert() {
           </div>
         </div>
         <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-          <li><router-link to="/Settings">{{ $t('nav.settings') }}</router-link></li>
-          <li><a @click.prevent="showAlert">{{ $t('nav.logout') }}</a></li>
+          <li v-if="authStore.isAuthenticated"><router-link to="/Settings">{{ $t('nav.settings') }}</router-link></li>
+          <li v-if="!authStore.isAuthenticated"><router-link to="/login">{{ $t('nav.login') }}</router-link></li>
+          <li v-if="authStore.isAuthenticated"><a @click.prevent="authStore.logout">{{ $t('nav.logout') }}</a></li>
+          <li v-if="authStore.isAdmin"><router-link to="/admin">{{ $t('nav.admin') }}</router-link></li>
         </ul>
       </div>
       <label class="swap swap-rotate">
