@@ -75,4 +75,9 @@ A SQL dump file is included in the project to help you create the necessary tabl
 **Build Tools:** Vite, TypeScript, ESLint, Prettier
 
 ## Roadmap
-  - Implement Nodemailer
+
+  - Search Function
+
+    ##### Later
+    - UI tweaks
+    - Optimize images
