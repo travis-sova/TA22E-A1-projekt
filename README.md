@@ -3,7 +3,6 @@
   Spinning Rat's Cinema
 </h1>
 
-
 Spinning Rat's Cinema is a school project — a simple cinema booking site that lets you browse movies, view showtimes, and book tickets easily. It’s built to practice full-stack development 
 
 ## Environment Variables
@@ -37,7 +36,7 @@ Go to the project directory
   cd TA22E-A1-project
 ```
 
-Install front- and backend dependencies
+Install root, front- and backend packages automatically
 
 ```bash
   npm run all

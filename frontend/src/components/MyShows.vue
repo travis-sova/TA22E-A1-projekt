@@ -1,10 +1,25 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import movies from '../../data/movies.js'
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
+
+const movies = ref<Movie[]>([]);
+const isLoading = ref(false);
+const error = ref<string | null>(null);
+
+interface Movie {
+  id: number;
+  name: string;
+  genre: string;
+  img: string;
+  description: string;
+  rating: number;
+}
 
 const emits = defineEmits(['sort-option-changed'])
 // Extract unique genres from the movies list
-const genres = ref([...new Set(movies.map((movie) => movie.genre))])
+const genres = ref([...new Set(movies.value.map((movie) => movie.genre))])
+console.log('Movies:', movies.value)
+console.log('Genres:', genres.value)
 const selectedGenre = ref('All') // Default: Show all genres
 const sortTitleOption = ref('A-Z') // Default: Sort titles A-Z
 
@@ -17,6 +32,33 @@ function updateTitleSort(option: string) {
   sortTitleOption.value = option
   emits('sort-option-changed', { genre: selectedGenre.value, title: sortTitleOption.value })
 }
+
+const fetchData = async () => {
+  isLoading.value = true;
+  error.value = null;
+
+  try {
+    const [moviesRes] = await Promise.all([
+      axios.get<Movie[]>("http://localhost:3000/api/content/movies")
+    ]);
+
+    movies.value = moviesRes.data;
+
+    // Update genres after fetching movies
+    genres.value = [...new Set(movies.value.map((movie) => movie.genre))];
+  } catch (err) {
+    error.value = axios.isAxiosError(err)
+      ? err.response?.data?.error || err.message
+      : 'Failed to fetch data';
+    console.error('Error fetching data:', err);
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+onMounted(() => {
+  fetchData();
+});
 </script>
 
 <template>
