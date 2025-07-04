@@ -2,13 +2,12 @@
 import logo from '@/assets/logo.svg'
 import ee from '@/assets/flags/ee.svg'
 import en from '@/assets/flags/en.svg'
-import de from '@/assets/flags/de.svg'
 import { RouterLink } from 'vue-router'
 import { useAuthStore } from '@/stores/auth';
 
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n';
-const { locale, t } = useI18n();
+const { locale } = useI18n();
 
 const currentFlag = ref(ee)
 const authStore = useAuthStore();
@@ -90,7 +89,6 @@ function changeLocale(str: string, img: string) {
           <li @click="changeLocale('en', en)" class=""><img alt="English" :src="en" class="w-20 h-auto" />
           </li>
           <li @click="changeLocale('ee', ee)"><img alt="Eesti" :src="ee" class="w-20 h-auto" /></li>
-          <li @click="changeLocale('de', de)"><img alt="Deutsch" :src="de" class="w-20 h-auto" /></li>
         </ul>
       </div>
     </div>

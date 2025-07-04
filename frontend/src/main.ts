@@ -25,7 +25,6 @@ import App from '@/App.vue'
 
 import en from '@/locales/en.json'
 import ee from '@/locales/ee.json'
-import de from '@/locales/de.json'
 
 //import router from './router'
 
@@ -35,8 +34,7 @@ const i18n = createI18n({
   fallbackLocale: 'en',
   messages: {
     en,
-    ee,
-    de
+    ee
   }
 })
 

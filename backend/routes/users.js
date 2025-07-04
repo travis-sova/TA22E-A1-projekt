@@ -6,9 +6,10 @@ const jwt = require("jsonwebtoken");
 const {
   validateRegisterInput,
   validateLoginInput,
+  validatePasswordChangeInput,
 } = require("../middleware/validation");
 const rateLimit = require("express-rate-limit");
-const { authenticate } = require("../middleware/auth");
+const { authenticate, deleteAuthentication, changePassword } = require("../middleware/auth");
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -122,5 +123,32 @@ router.get("/me", authenticate, async (req, res) => {
     res.status(500).json({ error: "Failed to fetch user data" });
   }
 });
+
+router.put("/me", authenticate, async (req, res) => {
+  try {
+    res.json('User Updated');
+  } catch (err) {
+    console.error("Update user error:", err);
+    res.status(500).json({ error: "Failed to update user data" });
+  }
+});
+
+router.put("/password", validatePasswordChangeInput, changePassword, async (req, res) => {
+  try {
+    res.json('Password changed');
+  } catch (err) {
+    console.error("Change password error:", err);
+    res.status(500).json({ error: "Failed to change password" });
+  }
+});
+
+router.delete("/delete", deleteAuthentication, async (req, res) => {
+  try {
+    res.json('User Deleted')
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).json({ error: "Failed to delete user" });
+  }
+})
 
 module.exports = router;

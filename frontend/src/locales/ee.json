@@ -98,6 +98,7 @@
   "shows": {
     "genres": {
       "all": "Kõik žanrid",
+      "Adventure": "Seilus",
       "Action": "Märul",
       "Comedy": "Komöödia",
       "Drama": "Draama",
@@ -170,7 +171,13 @@
     "dob": "Minu Sünnikuupäev",
     "join": "Liitu uudiskirjaga",
     "delete": "Kustuta konto",
-    "pass": "Parool"
+    "pass": "Parool",
+    "account": "Oled sa kindel?",
+    "confirm": "Kinnita, et soovida oma konto sulgeda",
+    "close": "Sulge",
+    "passOld": "Vana parool",
+    "passNew": "Uus parool",
+    "passConfirm": "Kinnita uus parool"
   },
   "error": {
     "found": "Lehte ei leitud",
@@ -215,5 +222,11 @@
     "gen2": "Naine",
     "gen3": "Muu",
     "gen4": "Rünnakuhelikopter"
+  },
+  "modal": {
+    "message": "Sõnum!",
+    "deleted": "Konto on kustutatud",
+    "close": "Sulge",
+    "unknown": "Teadmata tegevus"
   }
 }
