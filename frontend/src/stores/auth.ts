@@ -16,7 +16,9 @@ export const useAuthStore = defineStore('auth', {
     user: null as User | null,
     token: localStorage.getItem('token') || null,
     isLoading: false,
-    error: null as string | null
+    error: null as string | null,
+    message: null as string | null,
+    modalError: null as string | null
   }),
 
   getters: {
@@ -101,6 +103,72 @@ export const useAuthStore = defineStore('auth', {
         this.user = response.data;
       } catch {
         this.logout();
+      }
+    },
+
+    async deleteUser() {
+      try {
+        const response = await axios.delete('http://localhost:3000/api/users/delete', {
+          headers: {
+            Authorization: `Bearer ${this.token}`
+          }
+        });
+
+        if (response.data.message === "User deleted") {
+          router.push('/?modal=deleted');
+        }
+      } catch (err) {
+        this.error = axios.isAxiosError(err)
+          ? err.response?.data?.error || err.message
+          : 'Failed to fetch data';
+        console.error('Error fetching data:', err);
+      }
+    },
+
+    async updateUser(email: string, number: string, newsletter: string) {
+      this.error = null;
+
+      try {
+        const response = await axios.put(
+          'http://localhost:3000/api/users/me',
+          { email, number, newsletter },
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`
+            }
+          }
+        );
+
+        if (response.data.message === "Data updated") {
+          this.message = 'User data updated'
+        }
+      } catch (err) {
+        this.error = axios.isAxiosError(err)
+          ? err.response?.data?.error || err.message
+          : 'Failed to update data';
+        console.error('Error updating data:', err);
+      }
+    },
+
+    async changePassword(oldPassword: string, newPassword: string, newPasswordConfirm: string) {
+      try {
+        const response = await axios.put('http://localhost:3000/api/users/password',
+          { oldPassword, newPassword, newPasswordConfirm },
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`
+            }
+          }
+        );
+
+        if (response.data.message === "Password changed") {
+          this.message = 'Password changed successfully'
+          this.modalError = null
+        }
+      } catch (err) {
+        this.modalError = axios.isAxiosError(err)
+          ? err.response?.data?.errors?.[0]?.msg || err.response?.data?.error || err.message || ('Axios error code: ' + err.response?.status) : 'Failed to change password';
+        console.error('Error changing password:', err);
       }
     },
 

@@ -98,6 +98,7 @@
   "shows": {
     "genres": {
       "all": "All Genres",
+      "Adventure": "Adveture",
       "Action": "Action",
       "Comedy": "Comedy",
       "Drama": "Drama",
@@ -170,7 +171,13 @@
     "dob": "My Date of Birth",
     "join": "Join newsletters",
     "delete": "Delete account",
-    "pass": "Password"
+    "pass": "Password",
+    "account": "Are you sure?",
+    "confirm": "Confirm that you want to delete your account",
+    "close": "Close",
+    "passOld": "Old password",
+    "passNew": "new password",
+    "passConfirm": "Confirm new password"
   },
   "error": {
     "found": "Page not found",
@@ -214,5 +221,11 @@
     "gen2": "Female",
     "gen3": "Other",
     "gen4": "Attack Helicopter"
+  },
+  "modal": {
+    "message": "Message!",
+    "deleted": "Account has been deleted",
+    "close": "Close",
+    "unknown": "Unknown action"
   }
 }

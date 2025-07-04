@@ -1,9 +1,67 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
+import { useAuthStore } from '@/stores/auth';
+
+const auth = useAuthStore();
+
+const changes = ref(false)
+const user = ref<User | null>(null);
+const isLoading = ref(false);
+const error = ref<string | null>(null);
+
+const passwordDialog = ref<HTMLDialogElement | null>(null)
+
+interface User {
+  id: number;
+  username: string;
+  email: string;
+  number: number;
+  fname: string;
+  sname: string;
+  dob: Date;
+  sex: string;
+  newsletter: boolean;
+}
+
+const fetchData = async () => {
+  isLoading.value = true;
+  error.value = null;
+
+  try {
+    const token = localStorage.getItem('token')
+    const [UserRes] = await Promise.all([
+      axios.get<User>('http://localhost:3000/api/users/me', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }),
+    ]);
+
+    user.value = UserRes.data;
+
+    email.value = user.value.email;
+    number.value = user.value.number;
+    name.value = user.value.fname + ' ' + user.value.sname
+    dob.value = user.value.dob
+    newsletter.value = user.value.newsletter
+  } catch (err) {
+    error.value = axios.isAxiosError(err)
+      ? err.response?.data?.error || err.message
+      : 'Failed to fetch data';
+    console.error('Error fetching data:', err);
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+const name = ref('')
+const dob = ref()
+const newsletter = ref()
 
 const isDisabled = ref(true)
 const isHidden = ref(true)
-const email = ref('johndoe@example.com')
+const email = ref('')
 
 function toggleInput() {
   isDisabled.value = !isDisabled.value
@@ -13,12 +71,14 @@ function toggleInput() {
 function saveEmail() {
   isDisabled.value = true
   isHidden.value = true
-  console.log(email.value)
+  if (!changes.value) {
+    changes.value = true
+  }
 }
 
 const isDisabled1 = ref(true)
 const isHidden1 = ref(true)
-const number = ref('+372 123 4567')
+const number = ref()
 
 function toggleInput1() {
   isDisabled1.value = !isDisabled1.value
@@ -28,39 +88,85 @@ function toggleInput1() {
 function saveNumber() {
   isDisabled1.value = true
   isHidden1.value = true
-  console.log(number.value)
+  if (!changes.value) {
+    changes.value = true
+  }
 }
 
 const isDisabled2 = ref(true)
-const isHidden2 = ref(true)
 const password = ref('Parool')
-
-function toggleInput2() {
-  isDisabled2.value = !isDisabled2.value
-  isHidden2.value = !isHidden2.value
-}
-
-function savePassword() {
-  isDisabled2.value = true
-  isHidden2.value = true
-}
 
 function msg(text: string) {
   alert(text)
 }
 
+
+
+const deletion = async () => {
+  try {
+    await auth.deleteUser();
+  } catch {
+    // Error is already handled by the auth store
+  }
+};
+
+const update = async () => {
+  try {
+    await auth.updateUser(email.value, number.value, newsletter.value);
+  } catch {
+    // Error is already handled by the auth store
+  }
+}
+
+const oldPassword = ref('')
+const newPassword = ref('')
+const newPasswordConfirm = ref('')
+
+const changePassword = async () => {
+  try {
+    await auth.changePassword(oldPassword.value, newPassword.value, newPasswordConfirm.value);
+    if (!auth.modalError && passwordDialog.value) {
+      passwordDialog.value.close();
+    }
+  } catch {
+    // Error is already handled by the auth store
+  }
+}
+
+onMounted(() => {
+  fetchData();
+});
 </script>
 
 <template>
-  <div>
-    <div class="pt-20">
+
+  <div v-if="isLoading" class="flex flex-col items-center justify-center p-8 text-gray-500 my-">
+    <div class="w-10 h-10 border-4 border-gray-200 border-l-blue-600 rounded-full animate-spin mb-4"></div>
+    <p>Loading settings...</p>
+  </div>
+
+  <div v-if="error" class="p-8 bg-red-50 text-red-600 rounded-lg text-center max-w-2xl mx-auto mt-8 font-medium">
+    {{ error }}
+  </div>
+
+  <div v-if="auth.error" class="p-8 bg-red-50 text-red-600 rounded-lg text-center max-w-2xl mx-auto mt-8 font-medium">
+    {{ auth.error }}
+  </div>
+
+  <div v-if="auth.message"
+    class="p-8 bg-green-50 text-green-600 rounded-lg text-center max-w-2xl mx-auto mt-8 font-medium">
+    {{ auth.message }}
+  </div>
+
+  <div v-if="user">
+    <div class="py-20">
       <!-- back -->
       <div class="mx-auto bg-base-300 w-2/4 px-5 py-5 border border-primary-content rounded-3xl">
         <h1 class="text-center text-2xl font-bold text-primary-content mb-5">{{ $t('settings.settings') }}</h1>
         <!-- Mingi profiilikaart -->
         <div class="flex flex-row justify-center h-content pb-5 text-primary-content">
           <div class="flex flex-col items-center">
-            <h1>John Doe</h1>
+            <h1>{{ name }}</h1>
             <div class="flex flex-row items-center">
               <img src="@/assets/star.png" alt="star" class="w-auto h-5 mr-1" />
               <h1>{{ $t('settings.club') }}</h1>
@@ -103,15 +209,19 @@ function msg(text: string) {
               <span class="text-lg">{{ $t('settings.email') }}</span>
             </div>
             <div class="flex flex-row items-center">
-              <button class="btn mr-1 text-primary-content" @click="saveEmail" :disabled="isDisabled"
-                v-if="!isHidden">{{ $t('settings.save') }}</button>
+              <button class="btn mr-1 text-primary-content" @click="saveEmail" :disabled="isDisabled" v-if="!isHidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 0 1024 1024"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M730.585 78.77v267.815c0 19.692-15.754 37.415-37.416 37.415H273.723c-19.692 0-37.415-15.754-37.415-37.415V78.769h-78.77c-43.323 0-78.769 35.446-78.769 78.77v708.923c0 43.323 35.446 78.769 78.77 78.769h708.923c43.323 0 78.769-35.446 78.769-78.77V220.555L803.446 78.769zM868.43 829.045c0 19.692-15.754 37.416-37.416 37.416h-636.06c-19.692 0-37.416-15.754-37.416-37.416v-328.86c0-19.693 15.754-37.416 37.416-37.416h636.061c19.693 0 37.416 15.754 37.416 37.416zm-380.062-561.23c0 19.692 15.754 37.415 37.416 37.415h90.584c19.693 0 37.416-15.754 37.416-37.416V78.77H490.338z" />
+                </svg>
+              </button>
               <button class="btn mr-1 text-primary-content" @click="toggleInput" v-if="isHidden">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 0 512 512"
                   stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M 421.500 4.721 C 417.100 6.251, 411.025 9.172, 408 11.211 C 404.916 13.290, 351.176 66.261, 285.648 131.813 L 168.796 248.707 153.433 304.104 C 144.984 334.572, 138.055 361.231, 138.035 363.346 C 137.969 370.515, 143.329 376, 150.400 376 C 153.542 376, 257.434 347.801, 264 345.166 C 265.375 344.614, 319.636 290.913, 384.579 225.831 C 494.035 116.142, 502.888 107.020, 505.804 100.928 C 510.778 90.538, 512.279 83.152, 511.775 71.560 C 510.985 53.388, 506.223 44.280, 487.972 26.028 C 469.165 7.221, 460.578 2.881, 441 2.288 C 430.502 1.970, 428.803 2.182, 421.500 4.721 M 428.162 30.155 C 424.189 31.681, 420.403 34.545, 413.360 41.353 L 403.897 50.500 433.756 80.302 L 463.615 110.103 472.383 101.008 C 482.364 90.654, 485.092 85.553, 485.749 76.016 C 486.099 70.945, 485.706 68.169, 483.978 63.500 C 482.056 58.305, 480.064 55.805, 469.129 44.871 C 458.320 34.062, 455.666 31.936, 450.712 30.121 C 443.381 27.434, 435.212 27.446, 428.162 30.155 M 51.365 52.493 C 30.878 56.949, 15.367 69.050, 6.496 87.500 C 4.116 92.450, 1.681 98.885, 1.084 101.799 C -0.440 109.249, -0.440 453.751, 1.084 461.201 C 2.732 469.254, 10.161 483.736, 15.961 490.203 C 22.829 497.861, 34.227 505.311, 44.285 508.718 L 52.500 511.500 241.500 511.500 C 396.949 511.500, 431.476 511.260, 436 510.148 C 458.402 504.640, 476.829 486.816, 483.712 464 C 485.160 459.199, 485.419 450.687, 485.746 397 C 485.952 363.175, 485.851 334.051, 485.521 332.279 C 484.684 327.790, 479.259 322.327, 474.809 321.492 C 470.219 320.631, 464.802 323.067, 461.730 327.373 L 459.500 330.500 459 394.023 L 458.500 457.546 455.250 464.146 C 451.397 471.970, 445.119 478.116, 437.175 481.840 L 431.500 484.500 242.500 484.500 L 53.500 484.500 47.782 481.692 C 39.912 477.828, 33.507 471.291, 29.686 463.225 L 26.500 456.500 26.236 283.554 C 25.942 91.157, 25.462 105.169, 32.727 94.224 C 36.976 87.823, 43.180 82.882, 50.847 79.794 C 56.487 77.522, 56.646 77.516, 118.924 77.203 C 179.719 76.897, 181.422 76.836, 184.189 74.865 C 192.198 69.162, 191.533 57.436, 182.938 52.827 C 179.740 51.112, 175.786 51.005, 118.516 51.079 C 71.628 51.141, 56.079 51.468, 51.365 52.493 M 292.744 161.756 L 199.996 254.508 229.752 284.252 L 259.508 313.996 352.256 221.244 L 445.004 128.492 415.248 98.748 L 385.492 69.004 292.744 161.756 M 178.661 311.630 C 173.857 329.027, 170.107 343.440, 170.327 343.660 C 170.739 344.072, 233.143 327.087, 233.954 326.342 C 234.443 325.893, 188.890 280, 187.956 280 C 187.647 280, 183.465 294.234, 178.661 311.630" />
                 </svg>
-                {{ $t('settings.edit') }}
               </button>
               <input type="text" v-model="email" :disabled="isDisabled"
                 class="input input-bordered w-full max-w-xs bg-base-200" />
@@ -129,14 +239,19 @@ function msg(text: string) {
             </div>
             <div class="flex flex-row items-center">
               <button class="btn mr-1 text-primary-content" @click="saveNumber" :disabled="isDisabled1"
-                v-if="!isHidden1">{{ $t('settings.save') }}</button>
+                v-if="!isHidden1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 0 1024 1024"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M730.585 78.77v267.815c0 19.692-15.754 37.415-37.416 37.415H273.723c-19.692 0-37.415-15.754-37.415-37.415V78.769h-78.77c-43.323 0-78.769 35.446-78.769 78.77v708.923c0 43.323 35.446 78.769 78.77 78.769h708.923c43.323 0 78.769-35.446 78.769-78.77V220.555L803.446 78.769zM868.43 829.045c0 19.692-15.754 37.416-37.416 37.416h-636.06c-19.692 0-37.416-15.754-37.416-37.416v-328.86c0-19.693 15.754-37.416 37.416-37.416h636.061c19.693 0 37.416 15.754 37.416 37.416zm-380.062-561.23c0 19.692 15.754 37.415 37.416 37.415h90.584c19.693 0 37.416-15.754 37.416-37.416V78.77H490.338z" />
+                </svg>
+              </button>
               <button class="btn mr-1 text-primary-content" @click="toggleInput1" v-if="isHidden1">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 0 512 512"
                   stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M 421.500 4.721 C 417.100 6.251, 411.025 9.172, 408 11.211 C 404.916 13.290, 351.176 66.261, 285.648 131.813 L 168.796 248.707 153.433 304.104 C 144.984 334.572, 138.055 361.231, 138.035 363.346 C 137.969 370.515, 143.329 376, 150.400 376 C 153.542 376, 257.434 347.801, 264 345.166 C 265.375 344.614, 319.636 290.913, 384.579 225.831 C 494.035 116.142, 502.888 107.020, 505.804 100.928 C 510.778 90.538, 512.279 83.152, 511.775 71.560 C 510.985 53.388, 506.223 44.280, 487.972 26.028 C 469.165 7.221, 460.578 2.881, 441 2.288 C 430.502 1.970, 428.803 2.182, 421.500 4.721 M 428.162 30.155 C 424.189 31.681, 420.403 34.545, 413.360 41.353 L 403.897 50.500 433.756 80.302 L 463.615 110.103 472.383 101.008 C 482.364 90.654, 485.092 85.553, 485.749 76.016 C 486.099 70.945, 485.706 68.169, 483.978 63.500 C 482.056 58.305, 480.064 55.805, 469.129 44.871 C 458.320 34.062, 455.666 31.936, 450.712 30.121 C 443.381 27.434, 435.212 27.446, 428.162 30.155 M 51.365 52.493 C 30.878 56.949, 15.367 69.050, 6.496 87.500 C 4.116 92.450, 1.681 98.885, 1.084 101.799 C -0.440 109.249, -0.440 453.751, 1.084 461.201 C 2.732 469.254, 10.161 483.736, 15.961 490.203 C 22.829 497.861, 34.227 505.311, 44.285 508.718 L 52.500 511.500 241.500 511.500 C 396.949 511.500, 431.476 511.260, 436 510.148 C 458.402 504.640, 476.829 486.816, 483.712 464 C 485.160 459.199, 485.419 450.687, 485.746 397 C 485.952 363.175, 485.851 334.051, 485.521 332.279 C 484.684 327.790, 479.259 322.327, 474.809 321.492 C 470.219 320.631, 464.802 323.067, 461.730 327.373 L 459.500 330.500 459 394.023 L 458.500 457.546 455.250 464.146 C 451.397 471.970, 445.119 478.116, 437.175 481.840 L 431.500 484.500 242.500 484.500 L 53.500 484.500 47.782 481.692 C 39.912 477.828, 33.507 471.291, 29.686 463.225 L 26.500 456.500 26.236 283.554 C 25.942 91.157, 25.462 105.169, 32.727 94.224 C 36.976 87.823, 43.180 82.882, 50.847 79.794 C 56.487 77.522, 56.646 77.516, 118.924 77.203 C 179.719 76.897, 181.422 76.836, 184.189 74.865 C 192.198 69.162, 191.533 57.436, 182.938 52.827 C 179.740 51.112, 175.786 51.005, 118.516 51.079 C 71.628 51.141, 56.079 51.468, 51.365 52.493 M 292.744 161.756 L 199.996 254.508 229.752 284.252 L 259.508 313.996 352.256 221.244 L 445.004 128.492 415.248 98.748 L 385.492 69.004 292.744 161.756 M 178.661 311.630 C 173.857 329.027, 170.107 343.440, 170.327 343.660 C 170.739 344.072, 233.143 327.087, 233.954 326.342 C 234.443 325.893, 188.890 280, 187.956 280 C 187.647 280, 183.465 294.234, 178.661 311.630" />
                 </svg>
-                {{ $t('settings.edit') }}
               </button>
               <input type="text" v-model="number" :disabled="isDisabled1"
                 class="input input-bordered w-full max-w-xs bg-base-200" />
@@ -152,16 +267,45 @@ function msg(text: string) {
               <span class="text-lg">{{ $t('settings.password') }}</span>
             </div>
             <div class="flex flex-row items-center">
-              <button class="btn mr-1 text-primary-content" @click="savePassword" :disabled="isDisabled2"
-                v-if="!isHidden2">{{ $t('settings.save') }}</button>
-              <button class="btn mr-1 text-primary-content" @click="toggleInput2" v-if="isHidden2">
+              <!-- modal -->
+              <button class="btn mr-1" onclick="password.showModal()">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 0 512 512"
                   stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M 421.500 4.721 C 417.100 6.251, 411.025 9.172, 408 11.211 C 404.916 13.290, 351.176 66.261, 285.648 131.813 L 168.796 248.707 153.433 304.104 C 144.984 334.572, 138.055 361.231, 138.035 363.346 C 137.969 370.515, 143.329 376, 150.400 376 C 153.542 376, 257.434 347.801, 264 345.166 C 265.375 344.614, 319.636 290.913, 384.579 225.831 C 494.035 116.142, 502.888 107.020, 505.804 100.928 C 510.778 90.538, 512.279 83.152, 511.775 71.560 C 510.985 53.388, 506.223 44.280, 487.972 26.028 C 469.165 7.221, 460.578 2.881, 441 2.288 C 430.502 1.970, 428.803 2.182, 421.500 4.721 M 428.162 30.155 C 424.189 31.681, 420.403 34.545, 413.360 41.353 L 403.897 50.500 433.756 80.302 L 463.615 110.103 472.383 101.008 C 482.364 90.654, 485.092 85.553, 485.749 76.016 C 486.099 70.945, 485.706 68.169, 483.978 63.500 C 482.056 58.305, 480.064 55.805, 469.129 44.871 C 458.320 34.062, 455.666 31.936, 450.712 30.121 C 443.381 27.434, 435.212 27.446, 428.162 30.155 M 51.365 52.493 C 30.878 56.949, 15.367 69.050, 6.496 87.500 C 4.116 92.450, 1.681 98.885, 1.084 101.799 C -0.440 109.249, -0.440 453.751, 1.084 461.201 C 2.732 469.254, 10.161 483.736, 15.961 490.203 C 22.829 497.861, 34.227 505.311, 44.285 508.718 L 52.500 511.500 241.500 511.500 C 396.949 511.500, 431.476 511.260, 436 510.148 C 458.402 504.640, 476.829 486.816, 483.712 464 C 485.160 459.199, 485.419 450.687, 485.746 397 C 485.952 363.175, 485.851 334.051, 485.521 332.279 C 484.684 327.790, 479.259 322.327, 474.809 321.492 C 470.219 320.631, 464.802 323.067, 461.730 327.373 L 459.500 330.500 459 394.023 L 458.500 457.546 455.250 464.146 C 451.397 471.970, 445.119 478.116, 437.175 481.840 L 431.500 484.500 242.500 484.500 L 53.500 484.500 47.782 481.692 C 39.912 477.828, 33.507 471.291, 29.686 463.225 L 26.500 456.500 26.236 283.554 C 25.942 91.157, 25.462 105.169, 32.727 94.224 C 36.976 87.823, 43.180 82.882, 50.847 79.794 C 56.487 77.522, 56.646 77.516, 118.924 77.203 C 179.719 76.897, 181.422 76.836, 184.189 74.865 C 192.198 69.162, 191.533 57.436, 182.938 52.827 C 179.740 51.112, 175.786 51.005, 118.516 51.079 C 71.628 51.141, 56.079 51.468, 51.365 52.493 M 292.744 161.756 L 199.996 254.508 229.752 284.252 L 259.508 313.996 352.256 221.244 L 445.004 128.492 415.248 98.748 L 385.492 69.004 292.744 161.756 M 178.661 311.630 C 173.857 329.027, 170.107 343.440, 170.327 343.660 C 170.739 344.072, 233.143 327.087, 233.954 326.342 C 234.443 325.893, 188.890 280, 187.956 280 C 187.647 280, 183.465 294.234, 178.661 311.630" />
                 </svg>
-                {{ $t('settings.edit') }}
               </button>
+              <dialog id="password" class="modal" ref="passwordDialog">
+                <div class="modal-box">
+                  <h3 class="text-lg font-bold">Change Password</h3>
+                  <div v-if="auth.modalError"
+                    class="p-8 bg-red-50 text-red-600 rounded-lg text-center max-w-lg mx-auto my-2 font-medium">
+                    {{ auth.modalError }}
+                  </div>
+                  <form id="password" class="mx-auto flex flex-col items-center">
+                    <input type="password" v-model="oldPassword" :placeholder="$t('settings.passOld')"
+                      class="input input-bordered w-full max-w-xs bg-base-200 my-1" />
+                    <input type="password" v-model="newPassword" :placeholder="$t('settings.passNew')"
+                      class="input input-bordered w-full max-w-xs bg-base-200 my-1" />
+                    <input type="password" v-model="newPasswordConfirm" :placeholder="$t('settings.passConfirm')"
+                      class="input input-bordered w-full max-w-xs bg-base-200 my-1" />
+                  </form>
+                  <div class="modal-action">
+                    <form method="dialog">
+                      <button id="changeClose" class="btn">Close</button>
+                    </form>
+                    <button type="submit" form="password" class="btn mr-1 text-primary-content" @click="changePassword">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 0 1024 1024"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M730.585 78.77v267.815c0 19.692-15.754 37.415-37.416 37.415H273.723c-19.692 0-37.415-15.754-37.415-37.415V78.769h-78.77c-43.323 0-78.769 35.446-78.769 78.77v708.923c0 43.323 35.446 78.769 78.77 78.769h708.923c43.323 0 78.769-35.446 78.769-78.77V220.555L803.446 78.769zM868.43 829.045c0 19.692-15.754 37.416-37.416 37.416h-636.06c-19.692 0-37.416-15.754-37.416-37.416v-328.86c0-19.693 15.754-37.416 37.416-37.416h636.061c19.693 0 37.416 15.754 37.416 37.416zm-380.062-561.23c0 19.692 15.754 37.415 37.416 37.415h90.584c19.693 0 37.416-15.754 37.416-37.416V78.77H490.338z" />
+                      </svg>
+                      {{ $t('settings.save') }}
+                    </button>
+                  </div>
+                </div>
+              </dialog>
+              <!-- modal -->
               <input type="text" :value="isDisabled2 ? '' : password" :placeholder="$t('settings.pass')"
                 :disabled="isDisabled2" class="input input-bordered w-full max-w-xs bg-base-200" />
             </div>
@@ -181,7 +325,7 @@ function msg(text: string) {
             </div>
             <div class="flex flex-row items-center tooltip tooltip-accent hover:outline cursor-pointer"
               data-tip="Contact support to change DOB">
-              <input type="text" value="01/01/2000" disabled class="input input-bordered w-full max-w-xs bg-base-200" />
+              <input type="text" :value="dob" disabled class="input input-bordered w-full max-w-sm bg-base-200" />
             </div>
           </div>
         </div>
@@ -192,16 +336,35 @@ function msg(text: string) {
             <div class="col-start-1 col-end-3">
               <div class="form-control">
                 <label class="label cursor-pointer">
-                  <input type="checkbox" class="toggle toggle-success" checked />
+                  <input type="checkbox" class="toggle toggle-success" v-bind:checked="newsletter" />
                   <span class="label-text text-base">{{ $t('settings.join') }}</span>
                 </label>
               </div>
             </div>
             <!-- konto kustutamine -->
-            <div class="col-start-5">
-              <button class="btn btn-error" @click="msg('Midagi pole kustutada vennas')">{{ $t('settings.delete')
-              }}</button>
-            </div>
+            <!-- Open the modal using ID.showModal() method -->
+            <button class="btn btn-error col-start-5" onclick="deletionModal.showModal()">{{ $t('settings.delete')
+            }}</button>
+            <dialog id="deletionModal" class="modal">
+              <div class="modal-box">
+                <h3 class="text-lg font-bold">{{ $t('settings.account') }}</h3>
+                <div v-if="auth.error" class="alert alert-error p-3 text-sm">
+                  {{ auth.error }}
+                </div>
+                <p class="py-4">{{ $t('settings.confirm') }}</p>
+                <div class="modal-action">
+                  <form method="dialog">
+                    <!-- if there is a button in form, it will close the modal -->
+                    <button class="btn btn-success">{{ $t('settings.close') }}</button>
+                  </form>
+                  <form @submit.prevent="deletion">
+                    <button class="btn btn-error">{{ $t('settings.delete') }}</button>
+                  </form>
+                </div>
+              </div>
+            </dialog>
+            <!-- Salvesta muudatused -->
+            <button v-if="changes" @click="update" class="btn btn-success col-end-9">{{ $t('settings.save') }}</button>
           </div>
         </div>
       </div>

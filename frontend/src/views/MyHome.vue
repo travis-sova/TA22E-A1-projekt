@@ -2,6 +2,7 @@
 import MyCarousel from '@/components/MyCarousel.vue'
 import MyShows from '@/components/MyShows.vue'
 import MyShowCard from '@/components/MyShowCard.vue'
+import MyMessage from '@/components/MyMessage.vue'
 
 import { ref } from "vue";
 
@@ -16,6 +17,7 @@ function handleSortChange(newOption: { genre: string, title: string }) {
 
 <template>
   <div>
+    <MyMessage />
     <MyCarousel />
     <MyShows @sort-option-changed="handleSortChange" />
     <div class="movie-cards-container">
